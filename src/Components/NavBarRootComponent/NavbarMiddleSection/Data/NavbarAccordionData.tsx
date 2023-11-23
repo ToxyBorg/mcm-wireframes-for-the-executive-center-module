@@ -15,13 +15,13 @@ export const NavbarAccordionLinksData: NavbarAccordionProps[] = [
 				NavbarLinkLabel: "Staff",
 				NavbarLinkID: uuidv4(),
 				NavbarLinkDescription:
-					"This page could show data on staff demographics, shift patterns, staff-to-patient ratios, and staff satisfaction scores.",
+					"Information about the number of doctors, nurses, and other staff, their schedules, and any other relevant data.",
 			},
 			{
 				NavbarLinkLabel: "Equipment",
 				NavbarLinkID: uuidv4(),
 				NavbarLinkDescription:
-					"This page could provide an overview of the status of all connected equipment, including usage rates, maintenance schedules, and any reported issues.",
+					"Status of medical equipment, maintenance schedules, usage statistics, etc.",
 			},
 		],
 	},
@@ -33,6 +33,12 @@ export const NavbarAccordionLinksData: NavbarAccordionProps[] = [
 				NavbarLinkID: uuidv4(),
 				NavbarLinkDescription:
 					"This page could display data on the number of calls, response times, and resolution times.",
+			},
+			{
+				NavbarLinkLabel: "Nurse Call History",
+				NavbarLinkID: uuidv4(),
+				NavbarLinkDescription:
+					"A log of past nurse calls, useful for analyzing response times and patterns.",
 			},
 			{
 				NavbarLinkLabel: "ZKR System Status",
@@ -73,6 +79,35 @@ export const NavbarAccordionLinksData: NavbarAccordionProps[] = [
 				NavbarLinkID: uuidv4(),
 				NavbarLinkDescription:
 					"This page could show the current status of the monitoring system, including any ongoing issues or outages.",
+			},
+		],
+	},
+	{
+		NavbarAccordionLabel: "Finances",
+		ChildrenNavbarLinks: [
+			{
+				NavbarLinkLabel: "Revenue",
+				NavbarLinkID: uuidv4(),
+				NavbarLinkDescription:
+					"This page could include a line chart showing revenue over time, a breakdown of revenue by department or service, and a data table with more detailed information.",
+			},
+			{
+				NavbarLinkLabel: "Expenses",
+				NavbarLinkID: uuidv4(),
+				NavbarLinkDescription:
+					"Similar to the revenue page, but for expenses. This could include salaries, equipment costs, overhead, etc.",
+			},
+			{
+				NavbarLinkLabel: "Profit & Loss Statement",
+				NavbarLinkID: uuidv4(),
+				NavbarLinkDescription:
+					"A summary of revenues and expenses, showing net profit or loss over a selected period.",
+			},
+			{
+				NavbarLinkLabel: "Budgets",
+				NavbarLinkID: uuidv4(),
+				NavbarLinkDescription:
+					"A page where executives can view and manage budgets for different departments or projects.",
 			},
 		],
 	},
