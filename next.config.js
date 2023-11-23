@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
-
-module.exports = nextConfig
+const nextConfig = {
+    reactStrictMode: true,
+    swcMinify: true,
+    experimental: {
+        optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
+        typedRoutes: true,
+    },
+}
