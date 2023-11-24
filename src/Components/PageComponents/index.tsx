@@ -6,6 +6,8 @@ import {
 } from "./Data/PagesComponentsData";
 import { LineChart } from "./LineChart";
 import { LineChartProps } from "./LineChart/LineChartData";
+import { PieChartProps } from "./PieChart/PieChartData";
+import { PieChart } from "./PieChart";
 
 interface PageComponentsProps {
 	PageLinkName: string;
@@ -66,6 +68,36 @@ const GettingComponentsForPage = (props: GettingComponentsForPage) => {
 						return (
 							<div key={index}>
 								The Line Chart Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Pie Chart") {
+					function isPieChartProps(
+						obj: typeof component.Config
+					): obj is PieChartProps {
+						// Checking if properties exist in PieChartProps
+						return (
+							(obj as PieChartProps).data !== undefined &&
+							(obj as PieChartProps).options !== undefined
+						);
+					}
+
+					if (isPieChartProps(component.Config)) {
+						// TypeScript knows that component.Config is of type PieChartProps here
+						// Generate a PieChart component.Config
+						return (
+							<PieChart
+								options={component.Config.options}
+								data={component.Config.data}
+								key={index}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type PieChartProps" here
+						// We return a div that tells us the config is wrong for PieChart
+						return (
+							<div key={index}>
+								The Pie Chart Config For Element {index} is Wrong!
 							</div>
 						);
 					}

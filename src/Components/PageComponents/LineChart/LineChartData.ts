@@ -47,27 +47,3 @@ export const LineChart_init = (inputs?: Partial<LineChartProps>): LineChartProps
     }
 
 };
-
-/* EXAMPLE 
-
-interface Config {
-    isEnabled?: boolean;
-    // other properties...
-}
-
-function initConfig(options?: Partial<Config>): Config {
-    const defaults = {
-        isEnabled: true,
-        // other defaults...
-    };
-
-    return {
-        ...defaults,
-        ...options,
-    };
-}
-
-const config1: Config = initConfig(); // { isEnabled: true }
-const config2: Config = initConfig({ isEnabled: false }); // { isEnabled: false }
-
-*/
