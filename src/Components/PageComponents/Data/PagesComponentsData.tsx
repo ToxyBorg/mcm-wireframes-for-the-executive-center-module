@@ -1,9 +1,17 @@
 import "server-only";
 
 import { LineChartProps, LineChart_init } from "../LineChart/LineChartData";
+import { PieChartProps, PieChart_init } from "../PieChart/PieChartData";
+import {
+	TableComponentProps,
+	TableComponent_init,
+} from "../TableComponent/TableComponentData";
 
-type PageComponentNamesTypes = "Line Chart" | "option2" | "option3";
-type PageComponentConfigTypes = LineChartProps | "Wrong Type";
+type PageComponentNamesTypes = "Line Chart" | "Pie Chart" | "Table";
+type PageComponentConfigTypes =
+	| LineChartProps
+	| PieChartProps
+	| TableComponentProps;
 
 export interface PageComponentsType {
 	ComponentName: PageComponentNamesTypes;
@@ -26,7 +34,8 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 						options: {
 							plugins: {
 								title: {
-									text: "Patients discharge Line chart 1",
+									display: true,
+									text: "Patients discharge Line chart",
 								},
 							},
 						},
@@ -36,8 +45,33 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 				})(),
 			},
 			{
-				ComponentName: "Line Chart",
-				Config: LineChart_init(),
+				ComponentName: "Pie Chart",
+				Config: (() => {
+					let chart = PieChart_init({
+						options: {
+							plugins: {
+								title: {
+									display: true,
+									text: "Patient demographics (Age / Percentage)",
+								},
+							},
+						},
+					});
+					chart.data.datasets[0].label = "# Percentage of patients";
+					chart.data.labels = [
+						"Ages 0-5",
+						"Ages 6-13",
+						"Ages 14-18",
+						"Ages 19-30",
+						"Ages 31-50",
+						"Ages 51-80+",
+					];
+					return chart;
+				})(),
+			},
+			{
+				ComponentName: "Table",
+				Config: TableComponent_init(),
 			},
 		],
 	},
