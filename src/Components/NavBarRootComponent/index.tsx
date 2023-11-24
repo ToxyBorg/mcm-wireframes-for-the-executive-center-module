@@ -9,6 +9,7 @@ import {
 	AppShellSection,
 	Button,
 	NavLink,
+	ScrollArea,
 	Stack,
 	Text,
 } from "@mantine/core";
@@ -34,7 +35,10 @@ export const NavBarRootComponent = (props: NavBarRootComponentProps) => {
 				</Text>
 			</AppShellSection>
 
-			<AppShellSection grow>
+			<AppShellSection
+				component={ScrollArea}
+				grow
+			>
 				<NavbarMiddleSection />
 			</AppShellSection>
 
