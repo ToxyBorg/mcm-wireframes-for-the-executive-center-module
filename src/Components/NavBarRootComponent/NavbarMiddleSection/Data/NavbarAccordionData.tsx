@@ -1,6 +1,8 @@
 import { NavbarAccordionProps } from "../NavbarAccordion";
 import { v4 as uuidv4 } from "uuid";
 
+export let NavbarAccordionLinksStrippedHrefs: string[] = [];
+
 export const NavbarAccordionLinksData: NavbarAccordionProps[] = [
 	{
 		NavbarAccordionLabel: "Overview of clinic operations",
@@ -136,8 +138,14 @@ export const NavbarAccordionLinksData: NavbarAccordionProps[] = [
 	},
 ].map((item) => ({
 	...item,
-	ChildrenNavbarLinks: item.ChildrenNavbarLinks.map((link) => ({
-		...link,
-		Href: `/${link.NavbarLinkLabel.replace(/\s/g, "_")}`,
-	})),
+	ChildrenNavbarLinks: item.ChildrenNavbarLinks.map((link) => {
+		const modifiedLink = link.NavbarLinkLabel.replace(/\s/g, "_");
+
+		NavbarAccordionLinksStrippedHrefs.push(modifiedLink);
+
+		return {
+			...link,
+			Href: `/${modifiedLink}`,
+		};
+	}),
 }));
