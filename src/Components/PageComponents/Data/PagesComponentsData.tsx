@@ -2,9 +2,16 @@ import "server-only";
 
 import { LineChartProps, LineChart_init } from "../LineChart/LineChartData";
 import { PieChartProps, PieChart_init } from "../PieChart/PieChartData";
+import {
+	TableComponentProps,
+	TableComponent_init,
+} from "../TableComponent/TableComponentData";
 
-type PageComponentNamesTypes = "Line Chart" | "Pie Chart" | "option3";
-type PageComponentConfigTypes = LineChartProps | PieChartProps;
+type PageComponentNamesTypes = "Line Chart" | "Pie Chart" | "Table";
+type PageComponentConfigTypes =
+	| LineChartProps
+	| PieChartProps
+	| TableComponentProps;
 
 export interface PageComponentsType {
 	ComponentName: PageComponentNamesTypes;
@@ -61,6 +68,10 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 					];
 					return chart;
 				})(),
+			},
+			{
+				ComponentName: "Table",
+				Config: TableComponent_init(),
 			},
 		],
 	},
