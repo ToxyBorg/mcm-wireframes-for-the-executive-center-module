@@ -6,12 +6,21 @@ import {
 	TableComponentProps,
 	TableComponent_init,
 } from "../TableComponent/TableComponentData";
+import {
+	VerticalBarChartProps,
+	VerticalBarChart_init,
+} from "../VerticalBarChart/VerticalBarChartData";
 
-type PageComponentNamesTypes = "Line Chart" | "Pie Chart" | "Table";
+type PageComponentNamesTypes =
+	| "Line Chart"
+	| "Pie Chart"
+	| "Table"
+	| "Vertical Bar Chart";
 type PageComponentConfigTypes =
 	| LineChartProps
 	| PieChartProps
-	| TableComponentProps;
+	| TableComponentProps
+	| VerticalBarChartProps;
 
 export interface PageComponentsType {
 	ComponentName: PageComponentNamesTypes;
@@ -79,8 +88,21 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 		PageLinkName: "Staff",
 		PageComponents: [
 			{
-				ComponentName: "Line Chart",
-				Config: LineChart_init(),
+				ComponentName: "Vertical Bar Chart",
+				Config: (() => {
+					let chart = VerticalBarChart_init({
+						options: {
+							plugins: {
+								title: {
+									display: true,
+									text: "staff availability",
+								},
+							},
+						},
+					});
+
+					return chart;
+				})(),
 			},
 		],
 	},

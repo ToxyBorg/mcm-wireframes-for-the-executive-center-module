@@ -10,6 +10,8 @@ import { PieChartProps } from "./PieChart/PieChartData";
 import { PieChart } from "./PieChart";
 import { TableComponentProps } from "./TableComponent/TableComponentData";
 import { TableComponent } from "./TableComponent";
+import { VerticalBarChartProps } from "./VerticalBarChart/VerticalBarChartData";
+import { VerticalBarChart } from "./VerticalBarChart";
 
 interface PageComponentsProps {
 	PageLinkName: string;
@@ -130,6 +132,37 @@ const GettingComponentsForPage = (props: GettingComponentsForPage) => {
 						return (
 							<div key={index}>
 								The Table component Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Vertical Bar Chart") {
+					function isVerticalBarChartProps(
+						obj: typeof component.Config
+					): obj is VerticalBarChartProps {
+						// Checking if properties exist in VerticalBarChartProps
+						return (
+							(obj as VerticalBarChartProps).options !== undefined &&
+							(obj as VerticalBarChartProps).data !== undefined
+						);
+					}
+
+					if (isVerticalBarChartProps(component.Config)) {
+						// TypeScript knows that component.Config is of type VerticalBarChartProps here
+						// Generate a VerticalBarChart component.Config
+						return (
+							<VerticalBarChart
+								key={index}
+								options={component.Config.options}
+								data={component.Config.data}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type VerticalBarChartProps here
+						// We return a div that tells us the config is wrong for VerticalBarChart
+						return (
+							<div key={index}>
+								The VerticalBarChart component Config For Element {index} is
+								Wrong!
 							</div>
 						);
 					}
