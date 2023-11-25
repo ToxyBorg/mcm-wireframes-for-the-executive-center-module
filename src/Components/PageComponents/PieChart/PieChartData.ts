@@ -10,16 +10,19 @@ export const PieChart_init = (inputs?: Partial<PieChartProps>): PieChartProps =>
     const labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
     const defaults = {
         options: {
-            responsive: true,
             plugins: {
                 legend: {
                     position: 'top' as const,
+
                 },
                 title: {
                     display: true,
+                    position: 'top' as const,
                     text: 'Chart.js Pie Chart',
                 },
+
             },
+
         },
         data: {
             labels,

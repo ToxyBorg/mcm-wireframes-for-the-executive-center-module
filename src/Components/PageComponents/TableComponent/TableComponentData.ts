@@ -1,3 +1,5 @@
+import "server-only"
+
 import { faker } from "@faker-js/faker";
 
 export interface Column {
@@ -13,6 +15,8 @@ export interface Row {
 export interface TableComponentProps {
     columns: Column[];
     rows: Row[];
+    caption: string;
+    captionSide: 'top' | 'bottom';
 }
 
 export const TableComponent_init = (inputs?: Partial<TableComponentProps>): TableComponentProps => {
@@ -32,6 +36,8 @@ export const TableComponent_init = (inputs?: Partial<TableComponentProps>): Tabl
     const defaults = {
         columns: defaultColumns,
         rows: defaultRows,
+        caption: 'Default Caption',
+        captionSide: 'top' as const,
     };
 
     return {
