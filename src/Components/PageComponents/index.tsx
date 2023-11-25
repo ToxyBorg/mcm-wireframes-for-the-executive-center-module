@@ -12,6 +12,8 @@ import { TableComponentProps } from "./TableComponent/TableComponentData";
 import { TableComponent } from "./TableComponent";
 import { VerticalBarChartProps } from "./VerticalBarChart/VerticalBarChartData";
 import { VerticalBarChart } from "./VerticalBarChart";
+import { VirtualizedListProps } from "./VirtualizedList/VirtualizedListData";
+import { VirtualizedList } from "./VirtualizedList";
 
 interface PageComponentsProps {
 	PageLinkName: string;
@@ -112,7 +114,9 @@ const GettingComponentsForPage = (props: GettingComponentsForPage) => {
 						// Checking if properties exist in TableComponentProps
 						return (
 							(obj as TableComponentProps).columns !== undefined &&
-							(obj as TableComponentProps).rows !== undefined
+							(obj as TableComponentProps).rows !== undefined &&
+							(obj as TableComponentProps).caption !== undefined &&
+							(obj as TableComponentProps).captionSide !== undefined
 						);
 					}
 
@@ -124,6 +128,8 @@ const GettingComponentsForPage = (props: GettingComponentsForPage) => {
 								key={index}
 								columns={component.Config.columns}
 								rows={component.Config.rows}
+								caption={component.Config.caption}
+								captionSide={component.Config.captionSide}
 							/>
 						);
 					} else {
@@ -162,6 +168,37 @@ const GettingComponentsForPage = (props: GettingComponentsForPage) => {
 						return (
 							<div key={index}>
 								The VerticalBarChart component Config For Element {index} is
+								Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Virtualized List") {
+					function isVirtualizedListProps(
+						obj: typeof component.Config
+					): obj is VirtualizedListProps {
+						// Checking if properties exist in VirtualizedListProps
+						return (
+							(obj as VirtualizedListProps).rows !== undefined &&
+							(obj as VirtualizedListProps).title !== undefined
+						);
+					}
+
+					if (isVirtualizedListProps(component.Config)) {
+						// TypeScript knows that component.Config is of type VirtualizedListProps here
+						// Generate a VirtualizedList component.Config
+						return (
+							<VirtualizedList
+								key={index}
+								rows={component.Config.rows}
+								title={component.Config.title}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type VirtualizedListProps here
+						// We return a div that tells us the config is wrong for VirtualizedList
+						return (
+							<div key={index}>
+								The VirtualizedList component Config For Element {index} is
 								Wrong!
 							</div>
 						);

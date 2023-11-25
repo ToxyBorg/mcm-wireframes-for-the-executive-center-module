@@ -1,5 +1,8 @@
+import "server-only";
+
 import {
 	Table,
+	TableCaption,
 	TableScrollContainer,
 	TableTbody,
 	TableTd,
@@ -10,7 +13,7 @@ import {
 import { TableComponentProps, TableComponent_init } from "./TableComponentData";
 
 export const TableComponent = (props: TableComponentProps) => {
-	const { columns, rows } = TableComponent_init(props);
+	const { columns, rows, caption, captionSide } = TableComponent_init(props);
 
 	const headers = columns.map((column) => (
 		<TableTh key={column.accessor}>{column.header}</TableTh>
@@ -30,7 +33,9 @@ export const TableComponent = (props: TableComponentProps) => {
 				highlightOnHover
 				withTableBorder
 				withColumnBorders
+				captionSide={captionSide}
 			>
+				<TableCaption>{caption}</TableCaption>
 				<TableThead>
 					<TableTr>{headers}</TableTr>
 				</TableThead>
