@@ -11,6 +11,8 @@ import { VerticalBarChart } from "../VerticalBarChart";
 import { VerticalBarChartProps } from "../VerticalBarChart/VerticalBarChartData";
 import { VirtualizedList } from "../VirtualizedList";
 import { VirtualizedListProps } from "../VirtualizedList/VirtualizedListData";
+import { DoughnutChartProps } from "../DoughnutChart/DoughnutChartData";
+import { DoughnutChart } from "../DoughnutChart";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -175,6 +177,36 @@ export const GettingWrappedComponentForPage = (
 							<div key={index}>
 								The VirtualizedList component Config For Element {index} is
 								Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Doughnut Chart") {
+					function isDoughnutChartProps(
+						obj: typeof component.Config
+					): obj is DoughnutChartProps {
+						// Checking if properties exist in DoughnutChartProps
+						return (
+							(obj as DoughnutChartProps).data !== undefined &&
+							(obj as DoughnutChartProps).options !== undefined
+						);
+					}
+
+					if (isDoughnutChartProps(component.Config)) {
+						// TypeScript knows that component.Config is of type DoughnutChartProps here
+						// Generate a DoughnutChart component.Config
+						return (
+							<DoughnutChart
+								options={component.Config.options}
+								data={component.Config.data}
+								key={index}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type DoughnutChartProps" here
+						// We return a div that tells us the config is wrong for DoughnutChart
+						return (
+							<div key={index}>
+								The Doughnut Chart Config For Element {index} is Wrong!
 							</div>
 						);
 					}

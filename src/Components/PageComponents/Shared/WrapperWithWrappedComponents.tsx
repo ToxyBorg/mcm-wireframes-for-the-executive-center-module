@@ -1,7 +1,7 @@
 import "server-only";
 
 import { PageComponentsType } from "../Data/PagesComponentsData";
-import { Flex } from "@mantine/core";
+import { Flex, Space, Stack } from "@mantine/core";
 import { GettingWrappersForDashboardPagesComponents } from "./GettingWrappersForDashboardPagesComponents";
 import { GettingWrappedComponentForPage } from "./GettingWrappedComponentForPage";
 
@@ -13,10 +13,38 @@ export const WrapperWithWrappedComponents = (
 	props: WrapperWithWrappedComponentsInterface
 ) => {
 	return (
-		<Flex
+		<Stack
+			//   h={300}
+			// bg='dark.5'
+			gap='xl'
+			align='stretch'
+			justify='space-around'
+		>
+			{props.WrapperWithWrappedData.map((WrapperAndWrapped, WrapperIndex) => {
+				return (
+					<GettingWrappersForDashboardPagesComponents
+						Wrapped={WrapperAndWrapped.WrappedComponents}
+						Wrapper={WrapperAndWrapped.WrapperForComponents}
+						key={WrapperIndex}
+					/>
+					// 	{/* {WrapperAndWrapped.WrappedComponents} */}
+					// 	<GettingWrappedComponentForPage
+					// 		PagesComponentData={WrapperAndWrapped.WrappedComponents}
+					// 	/>
+					// </GettingWrappersForDashboardPagesComponents>
+					// // <Space h="md" />
+				);
+			})}
+		</Stack>
+	);
+};
+
+/*
+
+<Flex
 			gap='xl'
 			justify='flex-start'
-			align='center'
+			align='flex-start'
 			direction='column'
 			wrap='wrap'
 		>
@@ -33,5 +61,5 @@ export const WrapperWithWrappedComponents = (
 				);
 			})}
 		</Flex>
-	);
-};
+
+*/

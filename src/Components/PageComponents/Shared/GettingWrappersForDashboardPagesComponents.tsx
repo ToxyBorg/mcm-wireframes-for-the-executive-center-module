@@ -1,11 +1,28 @@
 import "server-only";
 
-import { Container, ContainerProps, Flex, FlexProps } from "@mantine/core";
-import { PageComponentsWrapperInterface } from "../Data/PagesComponentsData";
+import {
+	Center,
+	CenterProps,
+	Container,
+	ContainerProps,
+	Flex,
+	FlexProps,
+	Tabs,
+	TabsList,
+	TabsPanel,
+	TabsProps,
+	TabsTab,
+} from "@mantine/core";
+import {
+	PageComponentsWrapperInterface,
+	PageWrappedComponentsInterface,
+} from "../Data/PagesComponentsData";
+import { GettingWrappedComponentForPage } from "./GettingWrappedComponentForPage";
 
 interface GettingWrappersForDashboardPagesComponentsInterface {
 	Wrapper: PageComponentsWrapperInterface;
-	children: React.ReactNode;
+	Wrapped: PageWrappedComponentsInterface[];
+	// children: React.ReactNode;
 }
 
 export const GettingWrappersForDashboardPagesComponents = (
@@ -19,7 +36,11 @@ export const GettingWrappersForDashboardPagesComponents = (
 		}
 
 		if (isFlexProps(props.Wrapper.WrapperProps)) {
-			return <Flex {...props.Wrapper.WrapperProps}>{props.children}</Flex>;
+			return (
+				<Flex {...props.Wrapper.WrapperProps}>
+					<GettingWrappedComponentForPage PagesComponentData={props.Wrapped} />
+				</Flex>
+			);
 		} else {
 			return <div>The Flex Wrapper is Wrong!</div>;
 		}
@@ -32,7 +53,9 @@ export const GettingWrappersForDashboardPagesComponents = (
 
 		if (isContainerProps(props.Wrapper.WrapperProps)) {
 			return (
-				<Container {...props.Wrapper.WrapperProps}>{props.children}</Container>
+				<Container {...props.Wrapper.WrapperProps}>
+					<GettingWrappedComponentForPage PagesComponentData={props.Wrapped} />
+				</Container>
 			);
 		} else {
 			return <div>The Container Wrapper is Wrong!</div>;
@@ -45,9 +68,71 @@ export const GettingWrappersForDashboardPagesComponents = (
 		}
 
 		if (isDivProps(props.Wrapper.WrapperProps)) {
-			return <div {...props.Wrapper.WrapperProps}>{props.children}</div>;
+			return (
+				<div {...props.Wrapper.WrapperProps}>
+					<GettingWrappedComponentForPage PagesComponentData={props.Wrapped} />
+				</div>
+			);
 		} else {
 			return <div>The div Wrapper is Wrong!</div>;
+		}
+	} else if (props.Wrapper.WrapperName === "Tabs") {
+		function isTabsProps(
+			obj: typeof props.Wrapper.WrapperProps
+		): obj is TabsProps {
+			return (obj as TabsProps) !== undefined;
+		}
+
+		if (isTabsProps(props.Wrapper.WrapperProps)) {
+			return (
+				<Tabs
+					{...props.Wrapper.WrapperProps}
+					defaultValue={props.Wrapped.at(0)?.ComponentTitle}
+				>
+					<TabsList>
+						{props.Wrapped.map((wrappedItem, wrappedItemIndex) => {
+							return (
+								<TabsTab
+									value={wrappedItem.ComponentTitle}
+									key={wrappedItemIndex}
+								>
+									{wrappedItem.ComponentTitle}
+								</TabsTab>
+							);
+						})}
+					</TabsList>
+					{props.Wrapped.map((wrappedItem, wrappedItemIndex) => {
+						return (
+							<TabsPanel
+								value={wrappedItem.ComponentTitle}
+								key={wrappedItemIndex}
+							>
+								<GettingWrappedComponentForPage
+									PagesComponentData={[wrappedItem]}
+								/>
+							</TabsPanel>
+						);
+					})}
+				</Tabs>
+			);
+		} else {
+			return <div>The Tabs Wrapper is Wrong!</div>;
+		}
+	} else if (props.Wrapper.WrapperName === "Center") {
+		function isCenterProps(
+			obj: typeof props.Wrapper.WrapperProps
+		): obj is CenterProps {
+			return (obj as CenterProps) !== undefined;
+		}
+
+		if (isCenterProps(props.Wrapper.WrapperProps)) {
+			return (
+				<Center {...props.Wrapper.WrapperProps}>
+					<GettingWrappedComponentForPage PagesComponentData={props.Wrapped} />
+				</Center>
+			);
+		} else {
+			return <div>The Center Wrapper is Wrong!</div>;
 		}
 	}
 };

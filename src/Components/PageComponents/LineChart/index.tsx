@@ -28,6 +28,11 @@ export const LineChart = (props: LineChartProps) => {
 		<Line
 			options={props.options}
 			data={props.data}
+			redraw
+			// style={{
+			// 	maxWidth: 700,
+			// 	maxHeight: 700,
+			// }}
 		/>
 	);
 };

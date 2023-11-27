@@ -16,31 +16,47 @@ import {
 	VirtualizedListProps,
 	VirtualizedList_init,
 } from "../VirtualizedList/VirtualizedListData";
-import { ContainerProps, Flex, FlexProps } from "@mantine/core";
+import {
+	CenterProps,
+	ContainerProps,
+	Flex,
+	FlexProps,
+	TabsProps,
+} from "@mantine/core";
+import { ChartData, ChartOptions } from "chart.js";
+import {
+	DoughnutChartProps,
+	DoughnutChart_init,
+} from "../DoughnutChart/DoughnutChartData";
 
 type PageComponentNamesTypes =
 	| "Line Chart"
 	| "Pie Chart"
 	| "Table"
 	| "Vertical Bar Chart"
-	| "Virtualized List";
+	| "Virtualized List"
+	| "Doughnut Chart";
 type PageComponentConfigTypes =
 	| LineChartProps
 	| PieChartProps
 	| TableComponentProps
 	| VerticalBarChartProps
-	| VirtualizedListProps;
+	| VirtualizedListProps
+	| DoughnutChartProps;
 
-type WrapperNamesTypes = "Flex" | "Container" | "Div";
+type WrapperNamesTypes = "Flex" | "Container" | "Div" | "Tabs" | "Center";
 type WrapperPropsTypes =
 	| FlexProps
 	| ContainerProps
-	| React.HTMLAttributes<HTMLDivElement>;
+	| React.HTMLAttributes<HTMLDivElement>
+	| TabsProps
+	| CenterProps;
 export interface PageComponentsWrapperInterface {
 	WrapperName: WrapperNamesTypes;
 	WrapperProps: WrapperPropsTypes;
 }
 export interface PageWrappedComponentsInterface {
+	ComponentTitle: string;
 	ComponentName: PageComponentNamesTypes;
 	Config: PageComponentConfigTypes;
 }
@@ -60,19 +76,414 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 		PageComponents: [
 			{
 				WrapperForComponents: {
-					WrapperName: "Container",
-					WrapperProps: {
-						fluid: true,
-					},
+					WrapperName: "Tabs",
+					WrapperProps: { w: "100%" },
 				},
 				WrappedComponents: [
 					{
+						ComponentTitle: "Age Groups",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							const ageGroups = ["0-18", "19-30", "31-50", "51-65", "65+"];
+							const data = {
+								labels: ageGroups,
+								datasets: [
+									{
+										label: "Age Distribution",
+										backgroundColor: "#2196F3",
+										borderColor: "#2196F3",
+										borderWidth: 1,
+										data: ageGroups.map(() =>
+											faker.number.int({ min: 1, max: 100 })
+										),
+									},
+								],
+							};
+
+							const options: ChartOptions<"bar"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+								},
+							};
+
+							let chart = VerticalBarChart_init({
+								options: options,
+								data: data,
+							});
+							return chart;
+						})(),
+					},
+					{
+						ComponentTitle: "Average Length of Stay",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							const data: ChartData<"bar"> = {
+								labels: [
+									"General Medicine",
+									"Surgery",
+									"Pediatrics",
+									"Obstetrics & Gynecology",
+									"Cardiology",
+								],
+								datasets: [
+									{
+										label: "Average Length of Stay (Days)",
+										backgroundColor: "#03A9F4",
+										borderColor: "#03A9F4",
+										borderWidth: 2,
+										data: [
+											faker.number.int({ min: 3, max: 7 }),
+											faker.number.int({ min: 4, max: 8 }),
+											faker.number.int({ min: 2, max: 6 }),
+											faker.number.int({ min: 2, max: 5 }),
+											faker.number.int({ min: 3, max: 7 }),
+										],
+									},
+								],
+							};
+
+							const options: ChartOptions<"bar"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+									title: {
+										display: true,
+										text: "Average Length of Stay (ALOS)",
+									},
+								},
+							};
+
+							let chart = VerticalBarChart_init({
+								options: options,
+								data: data,
+							});
+							return chart;
+						})(),
+					},
+					{
+						ComponentTitle: "Gender Distribution",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							const data = {
+								labels: ["Male", "Female"],
+								datasets: [
+									{
+										label: "Gender Distribution",
+										backgroundColor: "#F44336",
+										borderColor: "#F44336",
+										borderWidth: 1,
+										data: [
+											faker.number.int({ min: 1, max: 100 }),
+											faker.number.int({ min: 1, max: 100 }),
+										],
+									},
+								],
+							};
+
+							const options: ChartOptions<"bar"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+								},
+							};
+
+							let chart = VerticalBarChart_init({
+								options: options,
+								data: data,
+							});
+							return chart;
+						})(),
+					},
+					{
+						ComponentTitle: "Insurance Providers",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							const insuranceProviders = [
+								"Aetna",
+								"Blue Cross Blue Shield",
+								"Cigna",
+								"Humana",
+								"UnitedHealthcare",
+							];
+							const data = {
+								labels: insuranceProviders,
+								datasets: [
+									{
+										label: "Insurance Provider Distribution",
+										backgroundColor: "#4CAF50",
+										borderColor: "#4CAF50",
+										borderWidth: 1,
+										data: insuranceProviders.map(() =>
+											faker.number.int({ min: 1, max: 100 })
+										),
+									},
+								],
+							};
+							const options: ChartOptions<"bar"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+								},
+							};
+
+							let chart = VerticalBarChart_init({
+								options: options,
+								data: data,
+							});
+							return chart;
+						})(),
+					},
+					{
+						ComponentTitle: "Diagnostic Category Distribution",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							const diagnosticCategories = [
+								"Laboratory Tests",
+								"Imaging Studies",
+								"Pathology",
+								"Cardiology",
+								"Neurology",
+							];
+							const data = {
+								labels: diagnosticCategories,
+								datasets: [
+									{
+										label: "Diagnostic Category Distribution",
+										backgroundColor: "#673AB7",
+										borderColor: "#673AB7",
+										borderWidth: 1,
+										data: diagnosticCategories.map(() =>
+											faker.number.int({ min: 1, max: 100 })
+										),
+									},
+								],
+							};
+							const options: ChartOptions<"bar"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+								},
+							};
+
+							let chart = VerticalBarChart_init({
+								options: options,
+								data: data,
+							});
+							return chart;
+						})(),
+					},
+					{
+						ComponentTitle: "Most Common Diagnoses",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							const diagnoses = [
+								"Hypertension",
+								"Diabetes Mellitus",
+								"Osteoarthritis",
+								"Depression",
+								"Anxiety",
+							];
+							const data = {
+								labels: diagnoses,
+								datasets: [
+									{
+										label: "Most Common Diagnoses",
+										backgroundColor: "#3F51B5",
+										borderColor: "#3F51B5",
+										borderWidth: 1,
+										data: diagnoses.map(() =>
+											faker.number.int({ min: 1, max: 100 })
+										),
+									},
+								],
+							};
+							const options: ChartOptions<"bar"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+								},
+							};
+
+							let chart = VerticalBarChart_init({
+								options: options,
+								data: data,
+							});
+							return chart;
+						})(),
+					},
+					{
+						ComponentTitle: "Primary Care Physician (PCP) Distribution",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							const pcps = [
+								"Dr. Smith",
+								"Dr. Jones",
+								"Dr. Brown",
+								"Dr. Williams",
+								"Dr. Miller",
+							];
+							const data = {
+								labels: pcps,
+								datasets: [
+									{
+										label: "PCP Distribution",
+										backgroundColor: "#9C27B0",
+										borderColor: "#9C27B0",
+										borderWidth: 1,
+										data: pcps.map(() =>
+											faker.number.int({ min: 1, max: 100 })
+										),
+									},
+								],
+							};
+							const options: ChartOptions<"bar"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+								},
+							};
+
+							let chart = VerticalBarChart_init({
+								options: options,
+								data: data,
+							});
+							return chart;
+						})(),
+					},
+					{
+						ComponentTitle: "Referral Source Distribution",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							const referralSources = [
+								"Urgent Care",
+								"Emergency Room",
+								"Specialist Referral",
+								"Employer",
+								"Self-Referral",
+							];
+							const data = {
+								labels: referralSources,
+								datasets: [
+									{
+										label: "Referral Source Distribution",
+										backgroundColor: "#03A9F4",
+										borderColor: "#03A9F4",
+										borderWidth: 1,
+										data: referralSources.map(() =>
+											faker.number.int({ min: 1, max: 100 })
+										),
+									},
+								],
+							};
+							const options: ChartOptions<"bar"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+								},
+							};
+
+							let chart = VerticalBarChart_init({
+								options: options,
+								data: data,
+							});
+							return chart;
+						})(),
+					},
+				],
+			},
+
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: { fluid: true, w: "100%" },
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Admission and Discharge Rates line chart",
 						ComponentName: "Line Chart",
 						Config: (() => {
-							let chart = LineChart_init();
-							chart.options.plugins!.title!.text =
-								"Patients discharge Line chart";
-							chart.data.datasets[0].label = "My New Label 1";
+							const labels = ["Jan", "Feb", "Mar", "Apr", "May"];
+
+							const admissionData = {
+								label: "Admissions",
+								fill: false,
+								lineTension: 0.5,
+								backgroundColor: "#2196F3",
+								borderColor: "#2196F3",
+								borderWidth: 2,
+								data: [
+									faker.number.int({ min: 10, max: 50 }),
+									faker.number.int({ min: 10, max: 50 }),
+									faker.number.int({ min: 10, max: 50 }),
+									faker.number.int({ min: 10, max: 50 }),
+									faker.number.int({ min: 10, max: 50 }),
+								],
+							};
+
+							const dischargeData = {
+								label: "Discharges",
+								fill: false,
+								lineTension: 0.5,
+								backgroundColor: "#F44336",
+								borderColor: "#F44336",
+								borderWidth: 2,
+								data: [
+									faker.number.int({ min: 5, max: 25 }),
+									faker.number.int({ min: 5, max: 25 }),
+									faker.number.int({ min: 5, max: 25 }),
+									faker.number.int({ min: 5, max: 25 }),
+									faker.number.int({ min: 5, max: 25 }),
+								],
+							};
+
+							const data = {
+								labels,
+								datasets: [admissionData, dischargeData],
+							};
+
+							const options: ChartOptions<"line"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+									title: {
+										display: true,
+										text: "Admission and Discharge Rates",
+									},
+								},
+							};
+
+							let chart = LineChart_init({
+								options: options,
+								data: data,
+							});
 							return chart;
 						})(),
 					},
@@ -80,194 +491,71 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 			},
 			{
 				WrapperForComponents: {
-					WrapperName: "Flex",
-					WrapperProps: { wrap: "wrap" },
+					WrapperName: "Center",
+					WrapperProps: { fluid: true, w: "100%" },
 				},
 				WrappedComponents: [
 					{
-						ComponentName: "Pie Chart",
+						ComponentTitle: "Patient Satisfaction chart",
+						ComponentName: "Doughnut Chart",
 						Config: (() => {
-							let chart = PieChart_init();
-							chart.options.plugins!.title!.text =
-								"Patient demographics (Age / Percentage)";
-							chart.data.datasets[0].label = "# Percentage of patients";
-							chart.data.labels = [
-								"Ages 0-5",
-								"Ages 6-13",
-								"Ages 14-18",
-								"Ages 19-30",
-								"Ages 31-50",
-								"Ages 51-80+",
+							const satisfactionLevels = [
+								"Very Satisfied",
+								"Satisfied",
+								"Neutral",
+								"Dissatisfied",
+								"Very Dissatisfied",
 							];
+							const satisfactionScores = [
+								faker.number.int({ min: 35, max: 60 }),
+								faker.number.int({ min: 20, max: 45 }),
+								faker.number.int({ min: 15, max: 30 }),
+								faker.number.int({ min: 5, max: 20 }),
+								faker.number.int({ min: 0, max: 5 }),
+							];
+
+							const data: ChartData<"doughnut"> = {
+								labels: satisfactionLevels,
+								datasets: [
+									{
+										label: "Patient Satisfaction",
+										data: satisfactionScores,
+										backgroundColor: [
+											"#2196F3",
+											"#673AB7",
+											"#F44336",
+											"#E91E63",
+											"#9C27B0",
+										],
+										borderColor: "transparent",
+										borderWidth: 2,
+									},
+								],
+							};
+
+							const options: ChartOptions<"doughnut"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+									title: {
+										display: true,
+										text: "Patient Satisfaction Scores",
+									},
+								},
+							};
+
+							let chart = DoughnutChart_init({
+								options: options,
+								data: data,
+							});
 							return chart;
 						})(),
-					},
-					{
-						ComponentName: "Pie Chart",
-						Config: (() => {
-							let chart = PieChart_init();
-							chart.options.plugins!.title!.text =
-								"Patient demographics (Age / Percentage)";
-							chart.data.datasets[0].label = "# Percentage of patients";
-							chart.data.labels = [
-								"Ages 0-5",
-								"Ages 6-13",
-								"Ages 14-18",
-								"Ages 19-30",
-								"Ages 31-50",
-								"Ages 51-80+",
-							];
-							return chart;
-						})(),
-					},
-				],
-			},
-			{
-				WrapperForComponents: {
-					WrapperName: "Container",
-					WrapperProps: { fluid: true },
-				},
-				WrappedComponents: [
-					{
-						ComponentName: "Table",
-						Config: TableComponent_init(),
 					},
 				],
 			},
 		],
 	},
-	// {
-	// 	PageLinkName: "Staff",
-	// 	PageComponents: [
-	// 		{
-	// 			ComponentName: "Vertical Bar Chart",
-	// 			Config: (() => {
-	// 				let chart = VerticalBarChart_init({
-	// 					options: {
-	// 						plugins: {
-	// 							title: {
-	// 								display: true,
-	// 								text: "Staff availability",
-	// 							},
-	// 						},
-	// 					},
-	// 				});
-
-	// 				return chart;
-	// 			})(),
-	// 		},
-	// 		{
-	// 			ComponentName: "Pie Chart",
-	// 			Config: (() => {
-	// 				let chart = PieChart_init();
-	// 				chart.options.plugins!.title!.text = "Staff roles";
-	// 				chart.data.datasets[0].label = "# Staff";
-	// 				chart.data.labels = [
-	// 					"data 1",
-	// 					"data 2",
-	// 					"data 3",
-	// 					"data 4",
-	// 					"data 5",
-	// 				];
-	// 				return chart;
-	// 			})(),
-	// 		},
-	// 		{
-	// 			ComponentName: "Table",
-	// 			Config: (() => {
-	// 				let chart = TableComponent_init({
-	// 					caption: "individual staff schedules",
-	// 					captionSide: "top",
-	// 				});
-	// 				return chart;
-	// 			})(),
-	// 		},
-	// 	],
-	// },
-	// {
-	// 	PageLinkName: "Equipment",
-	// 	PageComponents: [
-	// 		{
-	// 			ComponentName: "Line Chart",
-	// 			Config: (() => {
-	// 				let chart = LineChart_init({
-	// 					options: {
-	// 						plugins: {
-	// 							title: {
-	// 								display: true,
-	// 								text: "Equipment usage Line chart",
-	// 							},
-	// 						},
-	// 					},
-	// 				});
-	// 				chart.data.datasets[0].label = "Equipment 1";
-	// 				chart.data.datasets[1].label = "Equipment 2";
-	// 				return chart;
-	// 			})(),
-	// 		},
-	// 		{
-	// 			ComponentName: "Table",
-	// 			Config: (() => {
-	// 				let chart = TableComponent_init({
-	// 					caption: "Equipment maintenance schedules",
-	// 					captionSide: "top",
-	// 				});
-	// 				return chart;
-	// 			})(),
-	// 		},
-	// 	],
-	// },
-	// {
-	// 	PageLinkName: "Nurse_Call_Data",
-	// 	PageComponents: [
-	// 		{
-	// 			ComponentName: "Virtualized List",
-	// 			Config: (() => {
-	// 				const generateNurseCalls = (count: number) => {
-	// 					return Array.from({ length: count }, () => {
-	// 						return {
-	// 							id: faker.string.uuid(),
-	// 							nurse: faker.person.fullName(),
-	// 							room_number: `Room ${faker.number.int({ min: 1, max: 100 })}`,
-	// 							callTime: `${faker.number.int({
-	// 								min: 0,
-	// 								max: 1,
-	// 							})}h:${faker.number.int({
-	// 								min: 0,
-	// 								max: 59,
-	// 							})}m:${faker.number.int({ min: 0, max: 59 })}s`,
-	// 							patient_name: faker.person.fullName(),
-	// 							patient_age: faker.number.int({ min: 4, max: 99 }),
-	// 							condition: faker.string.fromCharacters([
-	// 								"Stable",
-	// 								"Critical",
-	// 								"Recovering",
-	// 								"Remission",
-	// 							]),
-	// 							checkInTime: faker.date.recent({ days: 1 }).toString(),
-	// 						};
-	// 					});
-	// 				};
-
-	// 				const nurseCalls = generateNurseCalls(10000);
-
-	// 				let chart = VirtualizedList_init({
-	// 					title: "active nurse calls",
-	// 					rows: nurseCalls,
-	// 				});
-	// 				return chart;
-	// 			})(),
-	// 		},
-	// 		{
-	// 			ComponentName: "Table",
-	// 			Config: (() => {
-	// 				let chart = TableComponent_init({
-	// 					caption: "Equipment maintenance schedules",
-	// 					captionSide: "top",
-	// 				});
-	// 				return chart;
-	// 			})(),
-	// 		},
-	// 	],
-	// },
 ];
