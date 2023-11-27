@@ -97,3 +97,36 @@ This page should provide a high-level overview of the clinic's operations, inclu
   * **Battery Levels:** Track the battery levels of patient monitoring devices and provide alerts for low battery levels.
 
   * **Calibration Status:** Monitor the calibration status of patient monitoring devices and ensure they are calibrated
+
+**CCTV Server**
+   - Live Feed: 
+     - Video component for viewing live feeds from CCTV cameras, with a dropdown menu for selecting the camera (use `react-player`).
+     - A map showing the location of each camera in the clinic (use `react-simple-maps`).
+   - Recorded Footage: 
+     - Video component for viewing recorded footage, with a date picker (use `react-datepicker`) and dropdown menu for selecting the footage.
+     - A timeline for navigating through the recorded footage (use `react-calendar-timeline`).
+
+ **Reports**
+   - Daily Reports: 
+     - Series of cards that summarize daily operations, including number of patients, staff workloads, equipment usage, etc. (use `react-grid-layout`).
+     - A line chart showing key metrics over the course of the day (use `react-chartjs-2`).
+   - Monthly Reports: 
+     - Series of line charts for spotting long-term trends (use `react-chartjs-2`).
+     - Data table for more detailed planning (use `react-table`).
+
+ **Finances**
+   - Revenue: 
+     - Line chart showing revenue over time (use `react-chartjs-2`).
+     - Breakdown of revenue by department or service (use `recharts`).
+     - Data table with more detailed information (use `react-table`).
+   - Expenses: 
+     - Line chart showing expenses over time (use `react-chartjs-2`).
+     - Breakdown of expenses by department or service (use `recharts`).
+     - Data table with more detailed information (use `react-table`).
+   - Profit & Loss Statement: 
+     - Summary of revenues and expenses, showing net profit or loss over a selected period.
+     - A bar chart comparing revenue and expenses (use `victory`).
+   - Budgets: 
+     - Page where executives can view and manage budgets for different departments or projects.
+     - A pie chart showing the distribution of the budget (use `recharts`).
+     - A data table for more detailed budget planning (use `react-table`).

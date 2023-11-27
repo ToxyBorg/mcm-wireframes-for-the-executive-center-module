@@ -32,6 +32,16 @@
     border: 1px solid #ccc;
 }
 
+.section {
+    padding: 20px;
+    border: 1px solid #ccc;
+
+}
+
+.subsection {
+    padding-bottom: 20px;
+}
+
 .patients,
 .staff,
 .equipment {

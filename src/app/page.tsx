@@ -246,6 +246,143 @@ export default function Home() {
 						</ul>
 					</div>
 				</div>
+				<div className={styles.section}>
+					<h3 className={styles.h3}>CCTV Server</h3>
+
+					<div className={styles.subsection}>
+						<h4>Live Feed</h4>
+
+						<ul className={styles.ul}>
+							<li className={styles.li}>
+								Video component for viewing live feeds from CCTV cameras, with a
+								dropdown menu for selecting the camera (use `react-player`).
+							</li>
+							<li className={styles.li}>
+								A map showing the location of each camera in the clinic (use
+								`react-simple-maps`).
+							</li>
+						</ul>
+					</div>
+
+					<div className={styles.subsection}>
+						<h4>Recorded Footage</h4>
+
+						<ul className={styles.ul}>
+							<li className={styles.li}>
+								Video component for viewing recorded footage, with a date picker
+								(use `react-datepicker`) and dropdown menu for selecting the
+								footage.
+							</li>
+							<li className={styles.li}>
+								A timeline for navigating through the recorded footage (use
+								`react-calendar-timeline`).
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div className={styles.section}>
+					<h3 className={styles.h3}>Reports</h3>
+
+					<div className={styles.subsection}>
+						<h4>Daily Reports</h4>
+
+						<ul className={styles.ul}>
+							<li className={styles.li}>
+								Series of cards that summarize daily operations, including
+								number of patients, staff workloads, equipment usage, etc. (use
+								`react-grid-layout`).
+							</li>
+							<li className={styles.li}>
+								A line chart showing key metrics over the course of the day (use
+								`react-chartjs-2`).
+							</li>
+						</ul>
+					</div>
+
+					<div className={styles.subsection}>
+						<h4>Monthly Reports</h4>
+
+						<ul className={styles.ul}>
+							<li className={styles.li}>
+								Series of line charts for spotting long-term trends (use
+								`react-chartjs-2`).
+							</li>
+							<li className={styles.li}>
+								Data table for more detailed planning (use `react-table`).
+							</li>
+						</ul>
+					</div>
+				</div>
+
+				<div className={styles.section}>
+					<h3 className={styles.h3}>Finances</h3>
+
+					<div className={styles.subsection}>
+						<h4>Revenue</h4>
+
+						<ul className={styles.ul}>
+							<li className={styles.li}>
+								Line chart showing revenue over time (use `react-chartjs-2`).
+							</li>
+							<li className={styles.li}>
+								Breakdown of revenue by department or service (use `recharts`).
+							</li>
+							<li className={styles.li}>
+								Data table with more detailed information (use `react-table`).
+							</li>
+						</ul>
+					</div>
+
+					<div className={styles.subsection}>
+						<h4>Expenses</h4>
+
+						<ul className={styles.ul}>
+							<li className={styles.li}>
+								Line chart showing expenses over time (use `react-chartjs-2`).
+							</li>
+							<li className={styles.li}>
+								Breakdown of expenses by department or service (use `recharts`).
+							</li>
+							<li className={styles.li}>
+								Data table with more detailed information (use `react-table`).
+							</li>
+						</ul>
+					</div>
+
+					<div className={styles.subsection}>
+						<h4>Profit & Loss Statement</h4>
+
+						<ul className={styles.ul}>
+							<li className={styles.li}>
+								Summary of revenues and expenses, showing net profit or loss
+								over a selected period.
+							</li>
+							<li className={styles.li}>
+								A bar chart comparing revenue and expenses (use `victory`).
+							</li>
+						</ul>
+					</div>
+
+					<div className={styles.subsection}>
+						<h4>Budgets</h4>
+
+						<ul className={styles.ul}>
+							<li className={styles.li}>
+								Page where executives can view and manage budgets for different
+								departments or projects.
+							</li>
+							<li className={styles.li}>
+								A pie chart showing the distribution of the budget (use
+								`recharts`).
+							</li>
+							<li className={styles.li}>
+								A data table for more detailed budget planning (use
+								`react-table`).
+							</li>
+						</ul>
+					</div>
+				</div>
 			</div>
 		</main>
 	);
