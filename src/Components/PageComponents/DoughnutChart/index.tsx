@@ -9,8 +9,8 @@ import {
 	Tooltip,
 	Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { VerticalBarChartProps } from "./VerticalBarChartData";
+import { Doughnut } from "react-chartjs-2";
+import { DoughnutChartProps } from "./DoughnutChartData";
 
 ChartJS.register(
 	CategoryScale,
@@ -21,12 +21,16 @@ ChartJS.register(
 	Legend
 );
 
-export const VerticalBarChart = (props: VerticalBarChartProps) => {
+export const DoughnutChart = (props: DoughnutChartProps) => {
 	return (
-		<Bar
+		<Doughnut
 			options={props.options}
 			data={props.data}
 			redraw
+			style={{
+				maxWidth: 700,
+				maxHeight: 700,
+			}}
 		/>
 	);
 };
