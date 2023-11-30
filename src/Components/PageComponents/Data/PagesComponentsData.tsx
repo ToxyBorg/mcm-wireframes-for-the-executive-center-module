@@ -811,6 +811,45 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 					},
 				],
 			},
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: {
+						fluid: true,
+						w: "100%",
+					},
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Equipment Maintenance Schedule",
+						ComponentName: "Big Calendar",
+						Config: (() => {
+							const equipmentNames = [
+								"MRI Machine",
+								"X-Ray Machine",
+								"Ultrasound Machine",
+								"Defibrillator",
+								"Ventilator",
+							];
+
+							let calendar = BigCalendarComponent_init();
+							calendar.calendarTitle = "Equipment Maintenance Schedule";
+							calendar.events = Array.from({ length: 19 }, () => ({
+								start: faker.date.soon({
+									days: faker.number.int({ min: 0.5, max: 7 }),
+								}),
+								end: faker.date.soon({
+									days: faker.number.int({ min: 7, max: 10 }),
+								}),
+								title: `${faker.string.fromCharacters(
+									equipmentNames
+								)} maintenance`,
+							}));
+							return calendar;
+						})(),
+					},
+				],
+			},
 		],
 	},
 ];
