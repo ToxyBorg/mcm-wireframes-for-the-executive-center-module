@@ -13,6 +13,8 @@ import { VirtualizedList } from "../VirtualizedList";
 import { VirtualizedListProps } from "../VirtualizedList/VirtualizedListData";
 import { DoughnutChartProps } from "../DoughnutChart/DoughnutChartData";
 import { DoughnutChart } from "../DoughnutChart";
+import { BigCalendarComponentProps } from "../BigCalendarComponent/BigCalendarComponentData";
+import { BigCalendarComponent } from "../BigCalendarComponent";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -207,6 +209,37 @@ export const GettingWrappedComponentForPage = (
 						return (
 							<div key={index}>
 								The Doughnut Chart Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Big Calendar") {
+					function isBigCalendarProps(
+						obj: typeof component.Config
+					): obj is BigCalendarComponentProps {
+						// Checking if properties exist in BigCalendarComponentProps
+						return (
+							(obj as BigCalendarComponentProps).events !== undefined &&
+							(obj as BigCalendarComponentProps).calendarTitle !== undefined
+						);
+					}
+
+					if (isBigCalendarProps(component.Config)) {
+						// TypeScript knows that component.Config is of type BigCalendarComponentProps here
+						// Generate a BigCalendar component.Config
+
+						return (
+							<BigCalendarComponent
+								key={index}
+								calendarTitle={component.Config.calendarTitle}
+								events={component.Config.events}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type BigCalendarComponentProps here
+						// We return a div that tells us the config is wrong for BigCalendarComponent
+						return (
+							<div key={index}>
+								The BigCalendar component Config For Element {index} is Wrong!
 							</div>
 						);
 					}
