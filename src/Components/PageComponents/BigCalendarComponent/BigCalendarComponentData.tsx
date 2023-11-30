@@ -13,7 +13,7 @@ export const BigCalendarComponent_init = (
 ): BigCalendarComponentProps => {
 	const defaults = {
 		calendarTitle: "Default Big Calendar",
-		events: Array.from({ length: 10 }, () => ({
+		events: Array.from({ length: 19 }, () => ({
 			start: faker.date.recent({
 				days: faker.number.int({ min: 0.5, max: 7 }),
 			}),
