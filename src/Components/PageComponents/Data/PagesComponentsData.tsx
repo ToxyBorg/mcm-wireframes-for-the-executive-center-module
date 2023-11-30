@@ -28,6 +28,10 @@ import {
 	DoughnutChartProps,
 	DoughnutChart_init,
 } from "../DoughnutChart/DoughnutChartData";
+import {
+	BigCalendarComponentProps,
+	BigCalendarComponent_init,
+} from "../BigCalendarComponent/BigCalendarComponentData";
 
 type PageComponentNamesTypes =
 	| "Line Chart"
@@ -35,14 +39,16 @@ type PageComponentNamesTypes =
 	| "Table"
 	| "Vertical Bar Chart"
 	| "Virtualized List"
-	| "Doughnut Chart";
+	| "Doughnut Chart"
+	| "Big Calendar";
 type PageComponentConfigTypes =
 	| LineChartProps
 	| PieChartProps
 	| TableComponentProps
 	| VerticalBarChartProps
 	| VirtualizedListProps
-	| DoughnutChartProps;
+	| DoughnutChartProps
+	| BigCalendarComponentProps;
 
 type WrapperNamesTypes = "Flex" | "Container" | "Div" | "Tabs" | "Center";
 type WrapperPropsTypes =
@@ -552,6 +558,113 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 								data: data,
 							});
 							return chart;
+						})(),
+					},
+				],
+			},
+		],
+	},
+	{
+		PageLinkName: "Staff",
+		PageComponents: [
+			{
+				WrapperForComponents: {
+					WrapperName: "Center",
+					WrapperProps: { fluid: true, w: "100%" },
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Breakdown of staff",
+						ComponentName: "Pie Chart",
+						Config: (() => {
+							const departments = [
+								"Nursing",
+								"Medical",
+								"Administrative",
+								"Support",
+							];
+							const jobTitles = {
+								Nursing: [
+									"Registered Nurse",
+									"Licensed Practical Nurse",
+									"Nurse Aide",
+								],
+								Medical: ["Physician", "Surgeon", "Specialist", "Therapist"],
+								Administrative: [
+									"Manager",
+									"Supervisor",
+									"Coordinator",
+									"Secretary",
+								],
+								Support: [
+									"Technician",
+									"Pharmacist",
+									"Lab Assistant",
+									"Dietitian",
+								],
+							};
+
+							const staffData = departments.map((department) => {
+								const jobTitleCounts = jobTitles[
+									department as keyof typeof jobTitles
+								].map(() => faker.number.int({ min: 2, max: 10 }));
+								return {
+									label: department,
+									data: jobTitleCounts,
+									backgroundColor: ["#2196F3", "#673AB7", "#F44336", "#E91E63"],
+									borderColor: "transparent",
+									borderWidth: 2,
+								};
+							});
+
+							const data: ChartData<"pie"> = {
+								labels: jobTitles.Nursing.concat(
+									jobTitles.Medical,
+									jobTitles.Administrative,
+									jobTitles.Support
+								),
+								datasets: staffData,
+							};
+
+							const options: ChartOptions<"pie"> = {
+								responsive: true,
+								plugins: {
+									legend: {
+										display: true,
+										position: "top",
+									},
+									title: {
+										display: true,
+										text: "Staff Composition",
+									},
+								},
+							};
+
+							let chart = PieChart_init({
+								options: options,
+								data: data,
+							});
+							return chart;
+						})(),
+					},
+				],
+			},
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: {
+						fluid: true,
+						w: "100%",
+					},
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Staff Schedules",
+						ComponentName: "Big Calendar",
+						Config: (() => {
+							let calendar = BigCalendarComponent_init();
+							calendar.calendarTitle = "Staff schedules";
+							return calendar;
 						})(),
 					},
 				],
