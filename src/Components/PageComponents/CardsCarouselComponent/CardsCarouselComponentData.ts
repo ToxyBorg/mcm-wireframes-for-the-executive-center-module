@@ -30,11 +30,21 @@ export const CardsCarouselComponent_init = (inputs?: Partial<CardsCarouselCompon
         imageURL: faker.image.url()
     }));
 
-    const defaults = {
+    const defaults: CardsCarouselComponentProps = {
         title: "Equipment Status",
         data: defaultData,
-        carouselProps: {},
-        cardProps: {},
+        carouselProps: {
+            withIndicators: true,
+            slideSize: '33.333333%',
+            slideGap: 'md',
+            loop: true,
+            align: 'start',
+            slidesToScroll: 3
+        },
+        cardProps: {
+            padding: 'md',
+            withBorder: true,
+        },
     };
 
     return {

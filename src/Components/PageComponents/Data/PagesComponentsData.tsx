@@ -787,7 +787,25 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 						ComponentTitle: "Equipment Status Cards",
 						ComponentName: "Cards Carousel",
 						Config: (() => {
+							const equipmentStatus = [
+								"Operational",
+								"Out of Service",
+								"Scheduled For Maintenance",
+								"Under Maintenance",
+							];
+
 							let equipmentsCardsCarousel = CardsCarouselComponent_init();
+
+							equipmentsCardsCarousel.data = Array.from({ length: 10 }, () => ({
+								id: faker.string.uuid(),
+								name: faker.commerce.productName(),
+								descriptive: faker.string.fromCharacters(equipmentStatus),
+								description: `Description: ${faker.lorem.paragraph()}`,
+								imageURL: faker.image.url(),
+							}));
+
+							equipmentsCardsCarousel.title = "Equipment Status Cards";
+
 							return equipmentsCardsCarousel;
 						})(),
 					},

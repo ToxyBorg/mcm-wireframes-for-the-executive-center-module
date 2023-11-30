@@ -29,29 +29,14 @@ export const CardsComponent = (props: CardsCarouselComponentProps) => {
 				<Text fw={"bold"}>{title}</Text>
 			</Center>
 			<Space h='md' />
-			<Carousel
-				{...carouselProps}
-				withIndicators
-				// height={200}
-
-				slideSize='33.333333%'
-				slideGap='md'
-				loop
-				align='start'
-				slidesToScroll={3}
-				height='100%'
-				style={{ flex: 1 }}
-			>
+			<Carousel {...carouselProps}>
 				{data.map((item) => (
 					<CarouselSlide
 						mah={700}
 						mih={350}
 						key={item.id}
 					>
-						<Card
-							padding='md'
-							{...cardProps}
-						>
+						<Card {...cardProps}>
 							<CardSection>
 								<Image
 									src={item.imageURL}
