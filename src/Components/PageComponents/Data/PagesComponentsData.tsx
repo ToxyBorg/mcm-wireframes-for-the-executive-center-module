@@ -669,6 +669,50 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 					},
 				],
 			},
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: {
+						fluid: true,
+						w: "100%",
+					},
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Staff Availability",
+						ComponentName: "Table",
+						Config: (() => {
+							let calendar = TableComponent_init();
+
+							calendar.caption = "Staff Availability";
+
+							calendar.columns = [
+								{ header: "Staff Name", accessor: "name" },
+								{ header: "Department", accessor: "department" },
+								{ header: "Availability", accessor: "availability" },
+							];
+
+							const departments = [
+								"Cardiology",
+								"Pediatrics",
+								"Neurology",
+								"Radiology",
+								"Emergency",
+							];
+							const availabilityStatus = ["Available", "On Break", "Off Duty"];
+
+							calendar.rows = Array.from({ length: 16 }, () => ({
+								id: faker.string.uuid(),
+								name: faker.person.fullName(),
+								department: faker.string.fromCharacters(departments),
+								availability: faker.string.fromCharacters(availabilityStatus),
+							}));
+
+							return calendar;
+						})(),
+					},
+				],
+			},
 		],
 	},
 ];

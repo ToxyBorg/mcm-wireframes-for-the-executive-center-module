@@ -27,8 +27,16 @@ export const TableComponent = (props: TableComponentProps) => {
 	));
 
 	return (
-		<TableScrollContainer minWidth={500}>
+		<TableScrollContainer
+			minWidth={500}
+			styles={{
+				scrollContainerInner: {
+					maxHeight: 750,
+				},
+			}}
+		>
 			<Table
+				stickyHeader
 				striped
 				highlightOnHover
 				withTableBorder
