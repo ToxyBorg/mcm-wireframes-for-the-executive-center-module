@@ -15,6 +15,8 @@ import { DoughnutChartProps } from "../DoughnutChart/DoughnutChartData";
 import { DoughnutChart } from "../DoughnutChart";
 import { BigCalendarComponentProps } from "../BigCalendarComponent/BigCalendarComponentData";
 import { BigCalendarComponent } from "../BigCalendarComponent";
+import { CardsCarouselComponentProps } from "../CardsCarouselComponent/CardsCarouselComponentData";
+import CardsCarouselComponent from "../CardsCarouselComponent";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -240,6 +242,42 @@ export const GettingWrappedComponentForPage = (
 						return (
 							<div key={index}>
 								The BigCalendar component Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Cards Carousel") {
+					function isCardsCarouselProps(
+						obj: typeof component.Config
+					): obj is CardsCarouselComponentProps {
+						// Checking if properties exist in CardsCarouselComponentProps
+						return (
+							(obj as CardsCarouselComponentProps).title !== undefined &&
+							(obj as CardsCarouselComponentProps).cardProps !== undefined &&
+							(obj as CardsCarouselComponentProps).carouselProps !==
+								undefined &&
+							(obj as CardsCarouselComponentProps).data !== undefined
+						);
+					}
+
+					if (isCardsCarouselProps(component.Config)) {
+						// TypeScript knows that component.Config is of type CardsCarouselComponentProps here
+						// Generate a CardsCarousel component.Config
+
+						return (
+							<CardsCarouselComponent
+								key={index}
+								title={component.Config.title}
+								cardProps={component.Config.cardProps}
+								carouselProps={component.Config.carouselProps}
+								data={component.Config.data}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type CardsCarouselComponentProps here
+						// We return a div that tells us the config is wrong for CardsCarouselComponent
+						return (
+							<div key={index}>
+								The CardsCarousel component Config For Element {index} is Wrong!
 							</div>
 						);
 					}

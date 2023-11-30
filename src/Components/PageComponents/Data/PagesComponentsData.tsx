@@ -32,6 +32,10 @@ import {
 	BigCalendarComponentProps,
 	BigCalendarComponent_init,
 } from "../BigCalendarComponent/BigCalendarComponentData";
+import {
+	CardsCarouselComponentProps,
+	CardsCarouselComponent_init,
+} from "../CardsCarouselComponent/CardsCarouselComponentData";
 
 type PageComponentNamesTypes =
 	| "Line Chart"
@@ -40,7 +44,8 @@ type PageComponentNamesTypes =
 	| "Vertical Bar Chart"
 	| "Virtualized List"
 	| "Doughnut Chart"
-	| "Big Calendar";
+	| "Big Calendar"
+	| "Cards Carousel";
 type PageComponentConfigTypes =
 	| LineChartProps
 	| PieChartProps
@@ -48,7 +53,8 @@ type PageComponentConfigTypes =
 	| VerticalBarChartProps
 	| VirtualizedListProps
 	| DoughnutChartProps
-	| BigCalendarComponentProps;
+	| BigCalendarComponentProps
+	| CardsCarouselComponentProps;
 
 type WrapperNamesTypes = "Flex" | "Container" | "Div" | "Tabs" | "Center";
 type WrapperPropsTypes =
@@ -709,6 +715,80 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 							}));
 
 							return calendar;
+						})(),
+					},
+				],
+			},
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: {
+						fluid: true,
+						w: "100%",
+					},
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Staff Performance Metrics",
+						ComponentName: "Table",
+						Config: (() => {
+							let calendar = TableComponent_init();
+
+							calendar.caption = "Staff Performance Metrics";
+
+							calendar.columns = [
+								{ header: "Staff Name", accessor: "name" },
+								{ header: "Department", accessor: "department" },
+								{ header: "Patients Seen", accessor: "patientsSeen" },
+								{
+									header: "Avg. Satisfaction Score (1-5)",
+									accessor: "satisfactionScore",
+								},
+							];
+
+							const departments = [
+								"Cardiology",
+								"Pediatrics",
+								"Neurology",
+								"Radiology",
+								"Emergency",
+							];
+
+							calendar.rows = Array.from({ length: 50 }, () => ({
+								id: faker.string.uuid(),
+								name: faker.person.fullName(),
+								department: faker.string.fromCharacters(departments),
+								patientsSeen: faker.number.int({ min: 5, max: 30 }),
+								satisfactionScore: faker.number
+									.float({ min: 1, max: 5 })
+									.toFixed(2),
+							}));
+
+							return calendar;
+						})(),
+					},
+				],
+			},
+		],
+	},
+	{
+		PageLinkName: "Equipment",
+		PageComponents: [
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: {
+						fluid: true,
+						w: "100%",
+					},
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Equipment Status Cards",
+						ComponentName: "Cards Carousel",
+						Config: (() => {
+							let equipmentsCardsCarousel = CardsCarouselComponent_init();
+							return equipmentsCardsCarousel;
 						})(),
 					},
 				],
