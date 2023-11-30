@@ -32,7 +32,8 @@ export const BigCalendarComponent = (props: BigCalendarComponentProps) => {
 			<Calendar
 				events={props.events}
 				localizer={localizer}
-				style={{ maxHeight: 1200, minHeight: 750 }}
+				style={{ height: 800 }}
+				// style={{ maxHeight: 1200, minHeight: 750 }}
 				defaultView='month'
 				popup
 			/>

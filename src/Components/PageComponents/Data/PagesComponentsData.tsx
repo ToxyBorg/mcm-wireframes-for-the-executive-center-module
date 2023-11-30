@@ -850,6 +850,54 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 					},
 				],
 			},
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: { fluid: true, w: "100%" },
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Equipment Usage Statistics line chart",
+						ComponentName: "Line Chart",
+						Config: (() => {
+							const equipmentNames = [
+								"MRI Machine",
+								"X-Ray Machine",
+								"Ultrasound Machine",
+								"Defibrillator",
+								"Ventilator",
+							];
+							const months = [
+								"January",
+								"February",
+								"March",
+								"April",
+								"May",
+								"June",
+								"July",
+								"August",
+								"September",
+								"October",
+								"November",
+								"December",
+							];
+
+							let chart = LineChart_init();
+
+							chart.options.plugins!.title!.text = "Equipment Usage Statistics";
+							chart.data.labels = months;
+							chart.data.datasets = equipmentNames.map((name) => ({
+								label: name,
+								borderColor: faker.internet.color(),
+								backgroundColor: faker.internet.color(),
+								data: months.map(() => faker.number.int({ min: 50, max: 200 })),
+							}));
+
+							return chart;
+						})(),
+					},
+				],
+			},
 		],
 	},
 ];
