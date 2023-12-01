@@ -4,10 +4,13 @@ import {
 	AppShell,
 	AppShellHeader,
 	AppShellMain,
-	AppShellNavbar,
+	Button,
+	Group,
+	Text,
 } from "@mantine/core";
 import ColorSchemeToggles from "@/Components/Testing/ColorSchemeToggles";
 import { NavBarRootComponent } from "@/Components/NavBarRootComponent";
+import Link from "next/link";
 
 interface Props {
 	children: React.ReactNode;
@@ -20,8 +23,23 @@ const AppShellWrapper = (props: Props) => {
 			navbar={{ width: 300, breakpoint: "sm" }}
 			padding='md'
 		>
-			<AppShellHeader>
-				<ColorSchemeToggles />
+			<AppShellHeader p={"xs"}>
+				<Group justify='space-between'>
+					<Button
+						p={"xs"}
+						component={Link}
+						href='/'
+						td={"none"}
+					>
+						<Text
+							size='xl'
+							fw={750}
+						>
+							MCM Executive Center Dashboard Outline
+						</Text>
+					</Button>
+					<ColorSchemeToggles />
+				</Group>
 			</AppShellHeader>
 
 			<NavBarRootComponent />
