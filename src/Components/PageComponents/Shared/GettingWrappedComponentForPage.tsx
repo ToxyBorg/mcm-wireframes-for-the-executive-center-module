@@ -17,6 +17,8 @@ import { BigCalendarComponentProps } from "../BigCalendarComponent/BigCalendarCo
 import { BigCalendarComponent } from "../BigCalendarComponent";
 import { CardsCarouselComponentProps } from "../CardsCarouselComponent/CardsCarouselComponentData";
 import CardsCarouselComponent from "../CardsCarouselComponent";
+import { BubbleChartProps } from "../BubbleChart/BubbleChartData";
+import { BubbleChart } from "../BubbleChart";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -278,6 +280,36 @@ export const GettingWrappedComponentForPage = (
 						return (
 							<div key={index}>
 								The CardsCarousel component Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Bubble Chart") {
+					function isBubbleChartProps(
+						obj: typeof component.Config
+					): obj is BubbleChartProps {
+						// Checking if properties exist in BubbleChartProps
+						return (
+							(obj as BubbleChartProps).data !== undefined &&
+							(obj as BubbleChartProps).options !== undefined
+						);
+					}
+
+					if (isBubbleChartProps(component.Config)) {
+						// TypeScript knows that component.Config is of type BubbleChartProps here
+						// Generate a BubbleChart component.Config
+						return (
+							<BubbleChart
+								options={component.Config.options}
+								data={component.Config.data}
+								key={index}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type BubbleChartProps" here
+						// We return a div that tells us the config is wrong for BubbleChart
+						return (
+							<div key={index}>
+								The Bubble Chart Config For Element {index} is Wrong!
 							</div>
 						);
 					}

@@ -36,6 +36,10 @@ import {
 	CardsCarouselComponentProps,
 	CardsCarouselComponent_init,
 } from "../CardsCarouselComponent/CardsCarouselComponentData";
+import {
+	BubbleChartProps,
+	BubbleChart_init,
+} from "../BubbleChart/BubbleChartData";
 
 type PageComponentNamesTypes =
 	| "Line Chart"
@@ -45,7 +49,8 @@ type PageComponentNamesTypes =
 	| "Virtualized List"
 	| "Doughnut Chart"
 	| "Big Calendar"
-	| "Cards Carousel";
+	| "Cards Carousel"
+	| "Bubble Chart";
 type PageComponentConfigTypes =
 	| LineChartProps
 	| PieChartProps
@@ -54,7 +59,8 @@ type PageComponentConfigTypes =
 	| VirtualizedListProps
 	| DoughnutChartProps
 	| BigCalendarComponentProps
-	| CardsCarouselComponentProps;
+	| CardsCarouselComponentProps
+	| BubbleChartProps;
 
 type WrapperNamesTypes = "Flex" | "Container" | "Div" | "Tabs" | "Center";
 type WrapperPropsTypes =
@@ -83,6 +89,118 @@ interface PageComponentDataInterface {
 }
 
 export const PagesComponentData: PageComponentDataInterface[] = [
+	{
+		PageLinkName: "Home",
+		PageComponents: [
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: { fluid: true, w: "100%" },
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Patient Volume line chart",
+						ComponentName: "Line Chart",
+						Config: (() => {
+							const months = [
+								"January",
+								"February",
+								"March",
+								"April",
+								"May",
+								"June",
+								"July",
+								"August",
+								"September",
+								"October",
+								"November",
+								"December",
+							];
+
+							let chart = LineChart_init();
+
+							chart.options.plugins!.title!.text = "Patient Volume";
+
+							chart.data.labels = months;
+							chart.data.datasets = [
+								{
+									label: "# of Patient Visits",
+									data: Array.from({ length: 12 }, () =>
+										faker.number.int({ min: 50, max: 500 })
+									),
+									fill: false,
+									backgroundColor: "rgb(75, 192, 192)",
+									borderColor: "rgba(75, 192, 192, 0.2)",
+								},
+							];
+
+							return chart;
+						})(),
+					},
+				],
+			},
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: { fluid: true, w: "100%" },
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Staffing Levels bubble chart",
+						ComponentName: "Bubble Chart",
+						Config: (() => {
+							const departments = [
+								"Cardiology",
+								"Neurology",
+								"Orthopedics",
+								"Pediatrics",
+								"Radiology",
+								"Surgery",
+								"Urology",
+							];
+							const staffTypes = [
+								"Doctors",
+								"Nurses",
+								"Admin Staff",
+								"Med Techs",
+								"Pharmacy Staff",
+								"Therapists",
+								"Support Staff",
+								"Social Workers",
+								"IT Staff",
+							];
+
+							let chart = BubbleChart_init();
+
+							chart.options.plugins!.title!.text =
+								"Staffing Levels by Department";
+							chart.options.scales!.x = {
+								...chart.options.scales!.x,
+								type: "category",
+								labels: staffTypes,
+							};
+							chart.options.scales!.y = {
+								...chart.options.scales!.y,
+								max: 35,
+							};
+
+							chart.data.datasets = departments.map((department) => ({
+								label: department,
+								data: staffTypes.map((staffType, staffTypeIndex) => ({
+									x: staffTypeIndex,
+									y: faker.number.int({ min: 10, max: 30 }),
+									r: faker.number.int({ min: 5, max: 20 }),
+								})),
+								backgroundColor: faker.internet.color(),
+							}));
+
+							return chart;
+						})(),
+					},
+				],
+			},
+		],
+	},
 	{
 		PageLinkName: "Patients",
 		PageComponents: [
