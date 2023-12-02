@@ -1122,24 +1122,23 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 			},
 			{
 				WrapperForComponents: {
-					WrapperName: "Container",
-					WrapperProps: {
-						fluid: true,
-						w: "100%",
-					},
+					WrapperName: "Tabs",
+					WrapperProps: {},
 				},
 				WrappedComponents: [
 					{
-						ComponentTitle: "Average Response Times bar chart",
+						ComponentTitle: "Average Emergency Response Times",
 						ComponentName: "Vertical Bar Chart",
 						Config: (() => {
 							// Define the types of calls, shifts, and staff members
-							const callTypes = ["Emergency", "Routine", "Check-up"];
+							// const callTypes = ["Emergency", "Routine", "Check-up"];
+							const callTypes = ["Emergency"];
 							const shifts = ["Morning", "Afternoon", "Night"];
 							// Generate random names and colors for the staff members
 							const staffMembers = Array.from({ length: 5 }, () => ({
 								name: faker.person.fullName(),
 								backgroundColor: faker.color.hsl({ format: "css" }),
+								borderColor: faker.color.hsl({ format: "css" }),
 							}));
 
 							const chart = VerticalBarChart_init();
@@ -1150,13 +1149,100 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 							chart.data = {
 								labels: callTypes,
 								datasets: shifts.flatMap((shift) =>
-									staffMembers.map(({ name, backgroundColor }) => ({
-										label: `${shift} - ${name}`,
-										backgroundColor: backgroundColor,
-										data: callTypes.map(() =>
-											faker.number.int({ min: 1, max: 15 })
-										),
-									}))
+									staffMembers.map(
+										({ name, backgroundColor, borderColor }) => ({
+											label: `${shift} - ${name}`,
+											backgroundColor: backgroundColor,
+											borderColor,
+											data: callTypes.map(() =>
+												faker.number.int({ min: 1, max: 15 })
+											),
+											categoryPercentage: 1,
+											barPercentage: 0.8,
+										})
+									)
+								),
+							};
+
+							return chart;
+						})(),
+					},
+					{
+						ComponentTitle: "Average Routine Response Times",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							// Define the types of calls, shifts, and staff members
+							// const callTypes = ["Emergency", "Routine", "Check-up"];
+							const callTypes = ["Routine"];
+							const shifts = ["Morning", "Afternoon", "Night"];
+							// Generate random names and colors for the staff members
+							const staffMembers = Array.from({ length: 5 }, () => ({
+								name: faker.person.fullName(),
+								backgroundColor: faker.color.hsl({ format: "css" }),
+								borderColor: faker.color.hsl({ format: "css" }),
+							}));
+
+							const chart = VerticalBarChart_init();
+
+							chart.options.plugins!.title!.text =
+								"Average Response Times by Call Type, Shift, and Staff Member";
+
+							chart.data = {
+								labels: callTypes,
+								datasets: shifts.flatMap((shift) =>
+									staffMembers.map(
+										({ name, backgroundColor, borderColor }) => ({
+											label: `${shift} - ${name}`,
+											backgroundColor: backgroundColor,
+											borderColor,
+											data: callTypes.map(() =>
+												faker.number.int({ min: 1, max: 15 })
+											),
+											categoryPercentage: 1,
+											barPercentage: 0.8,
+										})
+									)
+								),
+							};
+
+							return chart;
+						})(),
+					},
+					{
+						ComponentTitle: "Average Check-up Response Times",
+						ComponentName: "Vertical Bar Chart",
+						Config: (() => {
+							// Define the types of calls, shifts, and staff members
+							// const callTypes = ["Emergency", "Routine", "Check-up"];
+							const callTypes = ["Check-up"];
+							const shifts = ["Morning", "Afternoon", "Night"];
+							// Generate random names and colors for the staff members
+							const staffMembers = Array.from({ length: 5 }, () => ({
+								name: faker.person.fullName(),
+								backgroundColor: faker.color.hsl({ format: "css" }),
+								borderColor: faker.color.hsl({ format: "css" }),
+							}));
+
+							const chart = VerticalBarChart_init();
+
+							chart.options.plugins!.title!.text =
+								"Average Response Times by Call Type, Shift, and Staff Member";
+
+							chart.data = {
+								labels: callTypes,
+								datasets: shifts.flatMap((shift) =>
+									staffMembers.map(
+										({ name, backgroundColor, borderColor }) => ({
+											label: `${shift} - ${name}`,
+											backgroundColor: backgroundColor,
+											borderColor,
+											data: callTypes.map(() =>
+												faker.number.int({ min: 1, max: 15 })
+											),
+											categoryPercentage: 1,
+											barPercentage: 0.8,
+										})
+									)
 								),
 							};
 
@@ -1168,10 +1254,7 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 			{
 				WrapperForComponents: {
 					WrapperName: "Tabs",
-					WrapperProps: {
-						fluid: true,
-						w: "100%",
-					},
+					WrapperProps: {},
 				},
 				WrappedComponents: [
 					{
