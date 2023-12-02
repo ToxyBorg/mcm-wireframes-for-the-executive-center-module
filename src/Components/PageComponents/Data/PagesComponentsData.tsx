@@ -1,4 +1,5 @@
 import "server-only";
+// "use server";
 
 import { faker } from "@faker-js/faker";
 
@@ -23,7 +24,7 @@ import {
 	FlexProps,
 	TabsProps,
 } from "@mantine/core";
-import { ChartData, ChartOptions } from "chart.js";
+import { Chart, ChartData, ChartOptions, Color } from "chart.js";
 import {
 	DoughnutChartProps,
 	DoughnutChart_init,
@@ -761,78 +762,55 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 						ComponentTitle: "Breakdown of staff",
 						ComponentName: "Pie Chart",
 						Config: (() => {
-							const departments = [
-								"Nursing",
-								"Medical",
+							const jobTitles = [
+								"Doctors",
+								"Nurses",
+								"Technicians",
 								"Administrative",
-								"Support",
+								"Pharmacists",
+								"Other",
 							];
-							const jobTitles = {
-								Nursing: [
-									"Registered Nurse",
-									"Licensed Practical Nurse",
-									"Nurse Aide",
-								],
-								Medical: ["Physician", "Surgeon", "Specialist", "Therapist"],
-								Administrative: [
-									"Manager",
-									"Supervisor",
-									"Coordinator",
-									"Secretary",
-								],
-								Support: [
-									"Technician",
-									"Pharmacist",
-									"Lab Assistant",
-									"Dietitian",
-								],
-							};
+							const jobTitlesColors = [
+								"rgba(255, 99, 132, 1)",
+								"rgba(54, 162, 235, 1)",
+								"rgba(255, 206, 86, 1)",
+								"rgba(75, 192, 192, 1)",
+								"rgba(153, 102, 255, 1)",
+								"rgba(255, 159, 64, 1)",
+							];
+							const departments = [
+								"Cardiology",
+								"Neurology",
+								"Orthopedics",
+								"Radiology",
+								"Gastroenterology",
+							];
 
-							const staffData = departments.map((department) => {
-								const jobTitleCounts = jobTitles[
-									department as keyof typeof jobTitles
-								].map(() => faker.number.int({ min: 2, max: 10 }));
+							const datasets = departments.map((department) => {
+								const data = jobTitles.map(() =>
+									faker.number.int({ min: 1, max: 20 })
+								);
 								return {
 									label: department,
-									data: jobTitleCounts,
-									backgroundColor: ["#2196F3", "#673AB7", "#F44336", "#E91E63"],
-									borderColor: "transparent",
-									borderWidth: 2,
+									data: data,
+									backgroundColor: jobTitlesColors,
 								};
 							});
-
-							const data: ChartData<"pie"> = {
-								labels: jobTitles.Nursing.concat(
-									jobTitles.Medical,
-									jobTitles.Administrative,
-									jobTitles.Support
-								),
-								datasets: staffData,
+							let chart = PieChart_init();
+							chart.data = {
+								labels: jobTitles,
+								datasets,
 							};
 
-							const options: ChartOptions<"pie"> = {
-								responsive: true,
-								plugins: {
-									legend: {
-										display: true,
-										position: "top",
-									},
-									title: {
-										display: true,
-										text: "Staff Composition",
-									},
-								},
-							};
+							chart.options.plugins!.title!.text =
+								"Staff Composition by department";
 
-							let chart = PieChart_init({
-								options: options,
-								data: data,
-							});
 							return chart;
 						})(),
 					},
 				],
 			},
+
 			{
 				WrapperForComponents: {
 					WrapperName: "Container",
