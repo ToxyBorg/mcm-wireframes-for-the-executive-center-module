@@ -21,6 +21,8 @@ import { BubbleChartProps } from "../BubbleChart/BubbleChartData";
 import { BubbleChart } from "../BubbleChart";
 import { RadarChartProps } from "../RadarChart/RadarChartData";
 import { RadarChart } from "../RadarChart";
+import { ScatterChartProps } from "../ScatterChart/ScatterChartData";
+import { ScatterChart } from "../ScatterChart";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -342,6 +344,36 @@ export const GettingWrappedComponentForPage = (
 						return (
 							<div key={index}>
 								The Radar Chart Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Scatter Chart") {
+					function isScatterChartProps(
+						obj: typeof component.Config
+					): obj is ScatterChartProps {
+						// Checking if properties exist in ScatterChartProps
+						return (
+							(obj as ScatterChartProps).data !== undefined &&
+							(obj as ScatterChartProps).options !== undefined
+						);
+					}
+
+					if (isScatterChartProps(component.Config)) {
+						// TypeScript knows that component.Config is of type ScatterChartProps here
+						// Generate a ScatterChart component.Config
+						return (
+							<ScatterChart
+								options={component.Config.options}
+								data={component.Config.data}
+								key={index}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type ScatterChartProps" here
+						// We return a div that tells us the config is wrong for ScatterChart
+						return (
+							<div key={index}>
+								The Scatter Chart Config For Element {index} is Wrong!
 							</div>
 						);
 					}

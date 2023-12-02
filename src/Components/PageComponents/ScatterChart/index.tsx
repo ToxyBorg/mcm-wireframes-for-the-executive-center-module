@@ -1,31 +1,34 @@
 "use client";
 
+import "chartjs-adapter-date-fns";
+
 import {
 	Chart as ChartJS,
 	CategoryScale,
+	Legend,
 	LinearScale,
 	PointElement,
-	LineElement,
+	TimeScale,
+	Title,
+	Tooltip,
+} from "chart.js";
+
+import { Scatter } from "react-chartjs-2";
+import { ScatterChartProps } from "./ScatterChartData";
+
+ChartJS.register(
+	TimeScale,
+	CategoryScale,
+	LinearScale,
 	Title,
 	Tooltip,
 	Legend,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-import { LineChartProps } from "./LineChartData";
-
-ChartJS.register(
-	CategoryScale,
-	LinearScale,
-	PointElement,
-	LineElement,
-	Title,
-	Tooltip,
-	Legend
+	PointElement
 );
 
-export const LineChart = (props: LineChartProps) => {
+export const ScatterChart = (props: ScatterChartProps) => {
 	return (
-		<Line
+		<Scatter
 			options={props.options}
 			data={props.data}
 			redraw
