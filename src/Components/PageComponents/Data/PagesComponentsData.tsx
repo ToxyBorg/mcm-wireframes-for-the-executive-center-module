@@ -40,6 +40,7 @@ import {
 	BubbleChartProps,
 	BubbleChart_init,
 } from "../BubbleChart/BubbleChartData";
+import { RadarChartProps, RadarChart_init } from "../RadarChart/RadarChartData";
 
 type PageComponentNamesTypes =
 	| "Line Chart"
@@ -50,7 +51,8 @@ type PageComponentNamesTypes =
 	| "Doughnut Chart"
 	| "Big Calendar"
 	| "Cards Carousel"
-	| "Bubble Chart";
+	| "Bubble Chart"
+	| "Radar Chart";
 type PageComponentConfigTypes =
 	| LineChartProps
 	| PieChartProps
@@ -60,7 +62,8 @@ type PageComponentConfigTypes =
 	| DoughnutChartProps
 	| BigCalendarComponentProps
 	| CardsCarouselComponentProps
-	| BubbleChartProps;
+	| BubbleChartProps
+	| RadarChartProps;
 
 type WrapperNamesTypes = "Flex" | "Container" | "Div" | "Tabs" | "Center";
 type WrapperPropsTypes =
@@ -181,17 +184,74 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 							};
 							chart.options.scales!.y = {
 								...chart.options.scales!.y,
-								max: 35,
+								max: 12,
 							};
 
 							chart.data.datasets = departments.map((department) => ({
 								label: department,
 								data: staffTypes.map((staffType, staffTypeIndex) => ({
 									x: staffTypeIndex,
-									y: faker.number.int({ min: 10, max: 30 }),
-									r: faker.number.int({ min: 5, max: 20 }),
+									y: faker.number.int({ min: 2, max: 10 }),
+									r: faker.number.int({ min: 10, max: 50 }),
 								})),
 								backgroundColor: faker.internet.color(),
+							}));
+
+							return chart;
+						})(),
+					},
+				],
+			},
+			{
+				WrapperForComponents: {
+					WrapperName: "Center",
+					WrapperProps: { fluid: true, w: "100%" },
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Equipment Utilization Radar Chart",
+						ComponentName: "Radar Chart",
+						Config: (() => {
+							const equipmentTypes = [
+								"MRI Machine",
+								"CT Scanner",
+								"X-Ray Machine",
+								"Ultrasound Machine",
+								"ECG Machine",
+								"Endoscope",
+								"Defibrillator",
+							];
+
+							const months = [
+								"January",
+								"February",
+								"March",
+								"April",
+								"May",
+								"June",
+								"July",
+								"August",
+								"September",
+								"October",
+								"November",
+								"December",
+							];
+							let chart = RadarChart_init();
+
+							chart.data.labels = months;
+							chart.options.plugins!.title!.text =
+								"Equipment Utilization per month";
+							chart.data.datasets = equipmentTypes.map((equipment) => ({
+								label: equipment,
+								data: months.map((month, monthIndex) =>
+									faker.number.int({ min: 50, max: 100 })
+								),
+								backgroundColor: faker.color.hsl({
+									format: "css",
+									includeAlpha: true,
+								}),
+								borderColor: faker.color.human(),
+								borderWidth: 1,
 							}));
 
 							return chart;

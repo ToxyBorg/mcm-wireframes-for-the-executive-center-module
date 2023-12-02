@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "./mainPageStyles.module.css";
 export default function Home() {
 	return (
@@ -10,7 +11,9 @@ export default function Home() {
 				</h2>
 
 				<div className={styles.section}>
-					<h3 className={styles.h3}>Main Home Link</h3>
+					<h3 className={styles.h3}>
+						<Link href={"/Home"}>Main Home</Link>
+					</h3>
 					<p>
 						This page should provide a high-level overview of the clinic s
 						operations, including key metrics such as:
@@ -36,7 +39,9 @@ export default function Home() {
 					<h3 className={styles.h3}>Overview of Clinic Operations</h3>
 
 					<div className={styles.subsection}>
-						<h4>Patients</h4>
+						<h4>
+							<Link href={"/Patients"}>Patients</Link>
+						</h4>
 
 						<ul className={styles.ul}>
 							<li className={styles.li}>
@@ -56,7 +61,9 @@ export default function Home() {
 					</div>
 
 					<div className={styles.subsection}>
-						<h4>Staff</h4>
+						<h4>
+							<Link href={"/Staff"}>Staff</Link>
+						</h4>
 
 						<ul className={styles.ul}>
 							<li className={styles.li}>
@@ -79,7 +86,9 @@ export default function Home() {
 					</div>
 
 					<div className={styles.subsection}>
-						<h4>Equipment</h4>
+						<h4>
+							<Link href={"/Equipment"}>Equipment</Link>
+						</h4>
 
 						<ul className={styles.ul}>
 							<li className={styles.li}>
