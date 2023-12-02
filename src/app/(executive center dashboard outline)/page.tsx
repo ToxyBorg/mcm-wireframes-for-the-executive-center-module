@@ -112,7 +112,9 @@ export default function Home() {
 					<h3 className={styles.h3}>ZKR Nurse Call System</h3>
 
 					<div className={styles.subsection}>
-						<h4>Nurse Call Data</h4>
+						<h4>
+							<Link href={"/Nurse_Call_Data"}>Nurse Call Data</Link>
+						</h4>
 
 						<ul className={styles.ul}>
 							<li className={styles.li}>

@@ -14,8 +14,6 @@ export const WrapperWithWrappedComponents = (
 ) => {
 	return (
 		<Stack
-			//   h={300}
-			// bg='dark.5'
 			gap='xl'
 			align='stretch'
 			justify='space-around'
@@ -27,39 +25,8 @@ export const WrapperWithWrappedComponents = (
 						Wrapper={WrapperAndWrapped.WrapperForComponents}
 						key={WrapperIndex}
 					/>
-					// 	{/* {WrapperAndWrapped.WrappedComponents} */}
-					// 	<GettingWrappedComponentForPage
-					// 		PagesComponentData={WrapperAndWrapped.WrappedComponents}
-					// 	/>
-					// </GettingWrappersForDashboardPagesComponents>
-					// // <Space h="md" />
 				);
 			})}
 		</Stack>
 	);
 };
-
-/*
-
-<Flex
-			gap='xl'
-			justify='flex-start'
-			align='flex-start'
-			direction='column'
-			wrap='wrap'
-		>
-			{props.WrapperWithWrappedData.map((WrapperAndWrapped, WrapperIndex) => {
-				return (
-					<GettingWrappersForDashboardPagesComponents
-						Wrapper={WrapperAndWrapped.WrapperForComponents}
-						key={WrapperIndex}
-					>
-						<GettingWrappedComponentForPage
-							PagesComponentData={WrapperAndWrapped.WrappedComponents}
-						/>
-					</GettingWrappersForDashboardPagesComponents>
-				);
-			})}
-		</Flex>
-
-*/
