@@ -28,7 +28,7 @@ export const PieChart_init = (inputs?: Partial<PieChartProps>): PieChartProps =>
             labels,
             datasets: [
                 {
-                    label: '# of Votes',
+                    label: 'default label',
                     data: [12, 19, 3, 5, 2, 3],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',

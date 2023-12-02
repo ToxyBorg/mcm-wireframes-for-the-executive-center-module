@@ -19,6 +19,8 @@ import { CardsCarouselComponentProps } from "../CardsCarouselComponent/CardsCaro
 import CardsCarouselComponent from "../CardsCarouselComponent";
 import { BubbleChartProps } from "../BubbleChart/BubbleChartData";
 import { BubbleChart } from "../BubbleChart";
+import { RadarChartProps } from "../RadarChart/RadarChartData";
+import { RadarChart } from "../RadarChart";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -310,6 +312,36 @@ export const GettingWrappedComponentForPage = (
 						return (
 							<div key={index}>
 								The Bubble Chart Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Radar Chart") {
+					function isRadarChartProps(
+						obj: typeof component.Config
+					): obj is RadarChartProps {
+						// Checking if properties exist in RadarChartProps
+						return (
+							(obj as RadarChartProps).data !== undefined &&
+							(obj as RadarChartProps).options !== undefined
+						);
+					}
+
+					if (isRadarChartProps(component.Config)) {
+						// TypeScript knows that component.Config is of type RadarChartProps here
+						// Generate a RadarChart component.Config
+						return (
+							<RadarChart
+								options={component.Config.options}
+								data={component.Config.data}
+								key={index}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type RadarChartProps" here
+						// We return a div that tells us the config is wrong for RadarChart
+						return (
+							<div key={index}>
+								The Radar Chart Config For Element {index} is Wrong!
 							</div>
 						);
 					}

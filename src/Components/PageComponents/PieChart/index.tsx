@@ -13,8 +13,8 @@ export const PieChart = (props: PieChartProps) => {
 			data={props.data}
 			redraw
 			style={{
-				maxWidth: 700,
-				maxHeight: 700,
+				maxWidth: 800,
+				maxHeight: 800,
 			}}
 		/>
 	);
