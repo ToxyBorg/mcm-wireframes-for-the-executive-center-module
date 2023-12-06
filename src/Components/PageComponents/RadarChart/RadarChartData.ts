@@ -20,6 +20,11 @@ export const RadarChart_init = (inputs?: Partial<RadarChartProps>): RadarChartPr
                 }
             },
             plugins: {
+                filler: {
+                    propagate: true
+                },
+
+
                 legend: {
                     position: 'top',
                 },
@@ -28,6 +33,7 @@ export const RadarChart_init = (inputs?: Partial<RadarChartProps>): RadarChartPr
                     text: 'Radar chart',
                 },
             },
+
             scales: {
                 r: {
                     beginAtZero: true,

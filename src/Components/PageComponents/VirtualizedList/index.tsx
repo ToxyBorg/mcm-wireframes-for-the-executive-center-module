@@ -15,15 +15,15 @@ import {
 } from "@mantine/core";
 
 export const VirtualizedList = (props: VirtualizedListProps) => {
-	const { rows, title } = VirtualizedList_init(props);
+	// const { rows, title } = VirtualizedList_init(props);
 
 	return (
 		<Container fluid>
-			<Title order={1}>{title}</Title>
+			<Title order={1}>{props.title}</Title>
 			<Virtuoso
 				style={{ height: "600px" }}
-				totalCount={rows.length}
-				data={rows}
+				totalCount={props.rows.length}
+				data={props.rows}
 				itemContent={(index) => (
 					<Flex
 						mih={50}
@@ -38,16 +38,18 @@ export const VirtualizedList = (props: VirtualizedListProps) => {
 							border: "2px solid gray",
 						}}
 					>
-						{Object.entries(rows[index]).map(([key, value], valueIndex) => (
-							<Text
-								px={"xs"}
-								w={"100%"}
-								key={key}
-								// bg={valueIndex % 2 === 0 ? "grape.5" : "grape.3"}
-							>
-								{`${key}: ${value}`}
-							</Text>
-						))}
+						{Object.entries(props.rows[index]).map(
+							([key, value], valueIndex) => (
+								<Text
+									px={"xs"}
+									w={"100%"}
+									key={key}
+									// bg={valueIndex % 2 === 0 ? "grape.5" : "grape.3"}
+								>
+									{`${key}: ${value}`}
+								</Text>
+							)
+						)}
 					</Flex>
 				)}
 			/>

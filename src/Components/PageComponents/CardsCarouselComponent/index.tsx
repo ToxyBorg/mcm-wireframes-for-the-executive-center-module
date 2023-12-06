@@ -20,23 +20,23 @@ import {
 } from "./CardsCarouselComponentData";
 
 export const CardsComponent = (props: CardsCarouselComponentProps) => {
-	const { title, data, carouselProps, cardProps } =
-		CardsCarouselComponent_init(props);
+	// const { title, data, carouselProps, cardProps } =
+	// 	CardsCarouselComponent_init(props);
 
 	return (
 		<>
 			<Center>
-				<Text fw={"bold"}>{title}</Text>
+				<Text fw={"bold"}>{props.title}</Text>
 			</Center>
 			<Space h='md' />
-			<Carousel {...carouselProps}>
-				{data.map((item) => (
+			<Carousel {...props.carouselProps}>
+				{props.data.map((item) => (
 					<CarouselSlide
 						mah={700}
 						mih={350}
 						key={item.id}
 					>
-						<Card {...cardProps}>
+						<Card {...props.cardProps}>
 							<CardSection>
 								<Image
 									src={item.imageURL}
