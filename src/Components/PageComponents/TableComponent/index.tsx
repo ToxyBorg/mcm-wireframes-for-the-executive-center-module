@@ -13,14 +13,14 @@ import {
 import { TableComponentProps, TableComponent_init } from "./TableComponentData";
 
 export const TableComponent = (props: TableComponentProps) => {
-	const { columns, rows, caption, captionSide } = TableComponent_init(props);
+	// const { columns, rows, caption, captionSide } = TableComponent_init(props);
 
-	const headers = columns.map((column) => (
+	const headers = props.columns.map((column) => (
 		<TableTh key={column.accessor}>{column.header}</TableTh>
 	));
-	const bodyRows = rows.map((row) => (
+	const bodyRows = props.rows.map((row) => (
 		<TableTr key={row.id}>
-			{columns.map((column) => (
+			{props.columns.map((column) => (
 				<TableTd key={column.accessor}>{row[column.accessor]}</TableTd>
 			))}
 		</TableTr>
@@ -41,9 +41,9 @@ export const TableComponent = (props: TableComponentProps) => {
 				highlightOnHover
 				withTableBorder
 				withColumnBorders
-				captionSide={captionSide}
+				captionSide={props.captionSide}
 			>
-				<TableCaption>{caption}</TableCaption>
+				<TableCaption>{props.caption}</TableCaption>
 				<TableThead>
 					<TableTr>{headers}</TableTr>
 				</TableThead>

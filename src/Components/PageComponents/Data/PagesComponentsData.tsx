@@ -46,6 +46,7 @@ import {
 	ScatterChartProps,
 	ScatterChart_init,
 } from "../ScatterChart/ScatterChartData";
+import { TreeMapProps, TreeMap_init } from "../TreeMap/TreeMapData";
 
 type PageComponentNamesTypes =
 	| "Line Chart"
@@ -58,7 +59,8 @@ type PageComponentNamesTypes =
 	| "Cards Carousel"
 	| "Bubble Chart"
 	| "Radar Chart"
-	| "Scatter Chart";
+	| "Scatter Chart"
+	| "Tree Map";
 type PageComponentConfigTypes =
 	| LineChartProps
 	| PieChartProps
@@ -70,7 +72,8 @@ type PageComponentConfigTypes =
 	| CardsCarouselComponentProps
 	| BubbleChartProps
 	| RadarChartProps
-	| ScatterChartProps;
+	| ScatterChartProps
+	| TreeMapProps;
 
 type WrapperNamesTypes = "Flex" | "Container" | "Div" | "Tabs" | "Center";
 type WrapperPropsTypes =
@@ -1496,6 +1499,71 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 								max: 70,
 							};
 
+							return chart;
+						})(),
+					},
+				],
+			},
+
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: {
+						fluid: true,
+						w: "100%",
+					},
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "Resolution Times tree map",
+						ComponentName: "Tree Map",
+						Config: (() => {
+							const departments = [
+								"Cardiology",
+								"Neurology",
+								"Orthopedics",
+								"Pediatrics",
+								"Radiology",
+							];
+							const months = [
+								"January",
+								"February",
+								"March",
+								"April",
+								"May",
+								"June",
+								"July",
+								"August",
+								"September",
+								"October",
+								"November",
+								"December",
+							];
+
+							const chart = TreeMap_init();
+
+							chart.series = departments.map((department) => ({
+								name: department,
+								data: months.map((month) => ({
+									x: `${department} - ${month}`,
+									y: faker.number.int({ min: 10, max: 100 }),
+									z: JSON.stringify({
+										department,
+										month,
+										nurses: Array.from(
+											{ length: faker.number.int({ min: 5, max: 10 }) },
+											() => ({
+												name: faker.person.firstName(),
+												callsResolved: faker.number.int({ min: 20, max: 50 }),
+												averageResolutionTime: faker.number.int({
+													min: 1,
+													max: 5,
+												}), // in minutes
+											})
+										),
+									}),
+								})),
+							}));
 							return chart;
 						})(),
 					},

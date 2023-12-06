@@ -8,6 +8,9 @@ import {
 	Filler,
 	Tooltip,
 	Legend,
+	CategoryScale,
+	LinearScale,
+	Title,
 } from "chart.js";
 import { Radar } from "react-chartjs-2";
 
@@ -17,7 +20,10 @@ ChartJS.register(
 	LineElement,
 	Filler,
 	Tooltip,
-	Legend
+	Legend,
+	CategoryScale,
+	LinearScale,
+	Title
 );
 import { RadarChartProps } from "./RadarChartData";
 

@@ -23,6 +23,8 @@ import { RadarChartProps } from "../RadarChart/RadarChartData";
 import { RadarChart } from "../RadarChart";
 import { ScatterChartProps } from "../ScatterChart/ScatterChartData";
 import { ScatterChart } from "../ScatterChart";
+import { TreeMapProps } from "../TreeMap/TreeMapData";
+import { TreeMap } from "../TreeMap";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -374,6 +376,36 @@ export const GettingWrappedComponentForPage = (
 						return (
 							<div key={index}>
 								The Scatter Chart Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Tree Map") {
+					function isTreeMapProps(
+						obj: typeof component.Config
+					): obj is TreeMapProps {
+						// Checking if properties exist in TreeMapProps
+						return (
+							(obj as TreeMapProps).series !== undefined &&
+							(obj as TreeMapProps).options !== undefined
+						);
+					}
+
+					if (isTreeMapProps(component.Config)) {
+						// TypeScript knows that component.Config is of type TreeMapProps here
+						// Generate a TreeMap component.Config
+						return (
+							<TreeMap
+								options={component.Config.options}
+								series={component.Config.series}
+								key={index}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type TreeMapProps" here
+						// We return a div that tells us the config is wrong for TreeMap
+						return (
+							<div key={index}>
+								The Tree Map Config For Element {index} is Wrong!
 							</div>
 						);
 					}
