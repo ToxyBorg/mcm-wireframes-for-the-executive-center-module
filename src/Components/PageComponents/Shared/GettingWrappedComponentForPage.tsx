@@ -25,6 +25,8 @@ import { ScatterChartProps } from "../ScatterChart/ScatterChartData";
 import { ScatterChart } from "../ScatterChart";
 import { TreeMapProps } from "../TreeMap/TreeMapData";
 import { TreeMap } from "../TreeMap";
+import { DataGridComponentProps } from "../DataGridComponent/DataGridData";
+import { DataGridComponent } from "../DataGridComponent";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -406,6 +408,37 @@ export const GettingWrappedComponentForPage = (
 						return (
 							<div key={index}>
 								The Tree Map Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Data Grid") {
+					function isDataGridComponentProps(
+						obj: typeof component.Config
+					): obj is DataGridComponentProps {
+						// Checking if properties exist in DataGridComponentProps
+						return (
+							(obj as DataGridComponentProps).columns !== undefined &&
+							(obj as DataGridComponentProps).rows !== undefined
+						);
+					}
+
+					if (isDataGridComponentProps(component.Config)) {
+						// TypeScript knows that component.Config is of type DataGridComponentProps here
+						// Generate a DataGridComponent component.Config
+						return (
+							<DataGridComponent
+								title={component.ComponentTitle}
+								columns={component.Config.columns}
+								rows={component.Config.rows}
+								key={index}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type DataGridComponentProps" here
+						// We return a div that tells us the config is wrong for DataGridComponent
+						return (
+							<div key={index}>
+								The DataGrid Config For Element {index} is Wrong!
 							</div>
 						);
 					}
