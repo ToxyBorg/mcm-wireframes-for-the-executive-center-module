@@ -1305,7 +1305,7 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 													y: faker.number.int({ min: 1, max: 60 }),
 												};
 											}),
-											pointRadius: 5,
+											pointRadius: 10,
 											hidden: !(
 												currentHour >= shift.startHour &&
 												currentHour < shift.endHour
@@ -1315,26 +1315,24 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 								),
 							};
 
-							chart.options = {
-								...chart.options,
-								scales: {
-									x: {
-										type: "time",
-										time: {
-											unit: "day",
-										},
-										title: {
-											display: true,
-											text: "Time of Call",
-										},
-									},
-									y: {
-										title: {
-											display: true,
-											text: "Resolution Time (minutes)",
-										},
-									},
+							chart.options.scales!.x = {
+								offset: true,
+								type: "time",
+								time: {
+									unit: "day",
 								},
+								title: {
+									display: true,
+									text: "Time of Call",
+								},
+							};
+							chart.options.scales!.y = {
+								...chart.options.scales!.y,
+								title: {
+									display: true,
+									text: "Resolution Time (minutes)",
+								},
+								max: 70,
 							};
 
 							return chart;
@@ -1388,7 +1386,7 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 													y: faker.number.int({ min: 1, max: 60 }),
 												};
 											}),
-											pointRadius: 5,
+											pointRadius: 10,
 											hidden: !(
 												currentHour >= shift.startHour &&
 												currentHour < shift.endHour
@@ -1398,28 +1396,25 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 								),
 							};
 
-							chart.options = {
-								...chart.options,
-								scales: {
-									x: {
-										type: "time",
-										time: {
-											unit: "day",
-										},
-										title: {
-											display: true,
-											text: "Time of Call",
-										},
-									},
-									y: {
-										title: {
-											display: true,
-											text: "Resolution Time (minutes)",
-										},
-									},
+							chart.options.scales!.x = {
+								offset: true,
+								type: "time",
+								time: {
+									unit: "day",
+								},
+								title: {
+									display: true,
+									text: "Time of Call",
 								},
 							};
-
+							chart.options.scales!.y = {
+								...chart.options.scales!.y,
+								title: {
+									display: true,
+									text: "Resolution Time (minutes)",
+								},
+								max: 70,
+							};
 							return chart;
 						})(),
 					},
@@ -1471,7 +1466,7 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 													y: faker.number.int({ min: 1, max: 60 }),
 												};
 											}),
-											pointRadius: 5,
+											pointRadius: 10,
 											hidden: !(
 												currentHour >= shift.startHour &&
 												currentHour < shift.endHour
@@ -1481,26 +1476,24 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 								),
 							};
 
-							chart.options = {
-								...chart.options,
-								scales: {
-									x: {
-										type: "time",
-										time: {
-											unit: "day",
-										},
-										title: {
-											display: true,
-											text: "Time of Call",
-										},
-									},
-									y: {
-										title: {
-											display: true,
-											text: "Resolution Time (minutes)",
-										},
-									},
+							chart.options.scales!.x = {
+								offset: true,
+								type: "time",
+								time: {
+									unit: "day",
 								},
+								title: {
+									display: true,
+									text: "Time of Call",
+								},
+							};
+							chart.options.scales!.y = {
+								...chart.options.scales!.y,
+								title: {
+									display: true,
+									text: "Resolution Time (minutes)",
+								},
+								max: 70,
 							};
 
 							return chart;

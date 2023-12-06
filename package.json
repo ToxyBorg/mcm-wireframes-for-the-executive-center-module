@@ -10,13 +10,13 @@
 	},
 	"dependencies": {
 		"@faker-js/faker": "^8.3.1",
-		"@mantine/carousel": "^7.2.2",
-		"@mantine/core": "^7.2.2",
-		"@mantine/dates": "^7.2.2",
-		"@mantine/hooks": "^7.2.2",
-		"@types/react-big-calendar": "^1.8.5",
+		"@mantine/carousel": "^7.3.0",
+		"@mantine/core": "^7.3.0",
+		"@mantine/dates": "^7.3.0",
+		"@mantine/hooks": "^7.3.0",
+		"@types/react-big-calendar": "^1.8.6",
 		"@types/uuid": "^9.0.7",
-		"chart.js": "^4.4.0",
+		"chart.js": "^4.4.1",
 		"chartjs-adapter-date-fns": "^3.0.0",
 		"date-fns": "^2.30.0",
 		"dayjs": "^1.11.10",
@@ -32,13 +32,13 @@
 		"uuid": "^9.0.1"
 	},
 	"devDependencies": {
-		"@types/node": "^20.10.2",
-		"@types/react": "^18.2.40",
+		"@types/node": "^20.10.3",
+		"@types/react": "^18.2.42",
 		"@types/react-dom": "^18.2.17",
 		"eslint": "^8.55.0",
 		"eslint-config-next": "14.0.3",
 		"postcss": "^8.4.32",
-		"postcss-preset-mantine": "^1.11.0",
+		"postcss-preset-mantine": "^1.11.1",
 		"postcss-simple-vars": "^7.0.1",
 		"typescript": "^5.3.2"
 	}

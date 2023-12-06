@@ -10,9 +10,26 @@ export interface ScatterChartProps {
 
 export const ScatterChart_init = (inputs?: Partial<ScatterChartProps>): ScatterChartProps => {
     const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
-    const defaults = {
+    const defaults: ScatterChartProps = {
         options: {
             responsive: true,
+            scales: {
+                x: {
+                    offset: true,
+
+                    title: {
+                        display: true,
+                        text: "Default X axis Title",
+                    },
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: "Default Y axis Title",
+                    },
+                },
+            },
             plugins: {
                 legend: {
                     position: 'top' as const,
