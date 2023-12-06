@@ -48,6 +48,11 @@ import {
 } from "../ScatterChart/ScatterChartData";
 import { TreeMapProps, TreeMap_init } from "../TreeMap/TreeMapData";
 
+import {
+	DataGridComponentProps,
+	DataGridComponent_init,
+} from "../DataGridComponent/DataGridData";
+
 type PageComponentNamesTypes =
 	| "Line Chart"
 	| "Pie Chart"
@@ -60,7 +65,8 @@ type PageComponentNamesTypes =
 	| "Bubble Chart"
 	| "Radar Chart"
 	| "Scatter Chart"
-	| "Tree Map";
+	| "Tree Map"
+	| "Data Grid";
 type PageComponentConfigTypes =
 	| LineChartProps
 	| PieChartProps
@@ -73,7 +79,8 @@ type PageComponentConfigTypes =
 	| BubbleChartProps
 	| RadarChartProps
 	| ScatterChartProps
-	| TreeMapProps;
+	| TreeMapProps
+	| DataGridComponentProps;
 
 type WrapperNamesTypes = "Flex" | "Container" | "Div" | "Tabs" | "Center";
 type WrapperPropsTypes =
@@ -1254,256 +1261,6 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 					},
 				],
 			},
-			{
-				WrapperForComponents: {
-					WrapperName: "Tabs",
-					WrapperProps: {},
-				},
-				WrappedComponents: [
-					{
-						ComponentTitle: "Emergency Resolution Times",
-						ComponentName: "Scatter Chart",
-						Config: (() => {
-							// Define the types of calls, shifts, and staff members
-							// const callTypes = ["Emergency", "Routine", "Check-up"];
-							const callTypes = ["Emergency"];
-							const shifts = [
-								{ name: "Morning", startHour: 8, endHour: 16 },
-								{ name: "Afternoon", startHour: 16, endHour: 24 },
-								{ name: "Night", startHour: 0, endHour: 8 },
-							];
-							// Generate random names and colors for the staff members
-							const staffMembers = Array.from({ length: 5 }, () => ({
-								name: faker.person.fullName(),
-								backgroundColor: faker.color.hsl({ format: "css" }),
-								borderColor: faker.color.hsl({ format: "css" }),
-							}));
-
-							// Get the current hour
-							const currentHour = new Date().getHours();
-
-							const chart = ScatterChart_init();
-
-							chart.options.plugins!.title!.text =
-								"Resolution Times by Call Type, Shift, and Staff Member for the last 7 days";
-
-							chart.data = {
-								datasets: shifts.flatMap((shift) =>
-									staffMembers.flatMap((staffMember) =>
-										callTypes.map((callType) => ({
-											label: `${shift.name} - ${staffMember.name} - ${callType}`,
-											backgroundColor: staffMember.backgroundColor,
-											borderColor: staffMember.borderColor,
-											data: Array.from({ length: 7 }, (_, i) => {
-												const date = new Date();
-												date.setDate(date.getDate() - i);
-												date.setHours(
-													faker.number.int({
-														min: shift.startHour,
-														max: shift.endHour,
-													})
-												);
-												return {
-													x: date.getTime(),
-													y: faker.number.int({ min: 1, max: 60 }),
-												};
-											}),
-											pointRadius: 10,
-											hidden: !(
-												currentHour >= shift.startHour &&
-												currentHour < shift.endHour
-											),
-										}))
-									)
-								),
-							};
-
-							chart.options.scales!.x = {
-								offset: true,
-								type: "time",
-								time: {
-									unit: "day",
-								},
-								title: {
-									display: true,
-									text: "Time of Call",
-								},
-							};
-							chart.options.scales!.y = {
-								...chart.options.scales!.y,
-								title: {
-									display: true,
-									text: "Resolution Time (minutes)",
-								},
-								max: 70,
-							};
-
-							return chart;
-						})(),
-					},
-					{
-						ComponentTitle: "Routine Resolution Times",
-						ComponentName: "Scatter Chart",
-						Config: (() => {
-							// Define the types of calls, shifts, and staff members
-							// const callTypes = ["Emergency", "Routine", "Check-up"];
-							const callTypes = ["Routine"];
-							const shifts = [
-								{ name: "Morning", startHour: 8, endHour: 16 },
-								{ name: "Afternoon", startHour: 16, endHour: 24 },
-								{ name: "Night", startHour: 0, endHour: 8 },
-							];
-							// Generate random names and colors for the staff members
-							const staffMembers = Array.from({ length: 5 }, () => ({
-								name: faker.person.fullName(),
-								backgroundColor: faker.color.hsl({ format: "css" }),
-								borderColor: faker.color.hsl({ format: "css" }),
-							}));
-
-							// Get the current hour
-							const currentHour = new Date().getHours();
-
-							const chart = ScatterChart_init();
-
-							chart.options.plugins!.title!.text =
-								"Resolution Times by Call Type, Shift, and Staff Member for the last 7 days";
-
-							chart.data = {
-								datasets: shifts.flatMap((shift) =>
-									staffMembers.flatMap((staffMember) =>
-										callTypes.map((callType) => ({
-											label: `${shift.name} - ${staffMember.name} - ${callType}`,
-											backgroundColor: staffMember.backgroundColor,
-											borderColor: staffMember.borderColor,
-											data: Array.from({ length: 7 }, (_, i) => {
-												const date = new Date();
-												date.setDate(date.getDate() - i);
-												date.setHours(
-													faker.number.int({
-														min: shift.startHour,
-														max: shift.endHour,
-													})
-												);
-												return {
-													x: date.getTime(),
-													y: faker.number.int({ min: 1, max: 60 }),
-												};
-											}),
-											pointRadius: 10,
-											hidden: !(
-												currentHour >= shift.startHour &&
-												currentHour < shift.endHour
-											),
-										}))
-									)
-								),
-							};
-
-							chart.options.scales!.x = {
-								offset: true,
-								type: "time",
-								time: {
-									unit: "day",
-								},
-								title: {
-									display: true,
-									text: "Time of Call",
-								},
-							};
-							chart.options.scales!.y = {
-								...chart.options.scales!.y,
-								title: {
-									display: true,
-									text: "Resolution Time (minutes)",
-								},
-								max: 70,
-							};
-							return chart;
-						})(),
-					},
-					{
-						ComponentTitle: "Check-up Resolution Times",
-						ComponentName: "Scatter Chart",
-						Config: (() => {
-							// Define the types of calls, shifts, and staff members
-							// const callTypes = ["Emergency", "Routine", "Check-up"];
-							const callTypes = ["Check-up"];
-							const shifts = [
-								{ name: "Morning", startHour: 8, endHour: 16 },
-								{ name: "Afternoon", startHour: 16, endHour: 24 },
-								{ name: "Night", startHour: 0, endHour: 8 },
-							];
-							// Generate random names and colors for the staff members
-							const staffMembers = Array.from({ length: 5 }, () => ({
-								name: faker.person.fullName(),
-								backgroundColor: faker.color.hsl({ format: "css" }),
-								borderColor: faker.color.hsl({ format: "css" }),
-							}));
-
-							// Get the current hour
-							const currentHour = new Date().getHours();
-
-							const chart = ScatterChart_init();
-
-							chart.options.plugins!.title!.text =
-								"Resolution Times by Call Type, Shift, and Staff Member for the last 7 days";
-
-							chart.data = {
-								datasets: shifts.flatMap((shift) =>
-									staffMembers.flatMap((staffMember) =>
-										callTypes.map((callType) => ({
-											label: `${shift.name} - ${staffMember.name} - ${callType}`,
-											backgroundColor: staffMember.backgroundColor,
-											borderColor: staffMember.borderColor,
-											data: Array.from({ length: 7 }, (_, i) => {
-												const date = new Date();
-												date.setDate(date.getDate() - i);
-												date.setHours(
-													faker.number.int({
-														min: shift.startHour,
-														max: shift.endHour,
-													})
-												);
-												return {
-													x: date.getTime(),
-													y: faker.number.int({ min: 1, max: 60 }),
-												};
-											}),
-											pointRadius: 10,
-											hidden: !(
-												currentHour >= shift.startHour &&
-												currentHour < shift.endHour
-											),
-										}))
-									)
-								),
-							};
-
-							chart.options.scales!.x = {
-								offset: true,
-								type: "time",
-								time: {
-									unit: "day",
-								},
-								title: {
-									display: true,
-									text: "Time of Call",
-								},
-							};
-							chart.options.scales!.y = {
-								...chart.options.scales!.y,
-								title: {
-									display: true,
-									text: "Resolution Time (minutes)",
-								},
-								max: 70,
-							};
-
-							return chart;
-						})(),
-					},
-				],
-			},
 
 			{
 				WrapperForComponents: {
@@ -1515,55 +1272,111 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 				},
 				WrappedComponents: [
 					{
-						ComponentTitle: "Resolution Times tree map",
-						ComponentName: "Tree Map",
+						ComponentTitle:
+							"Incident Resolution Times by Call Type, Shift, and Staff Member for the lr for the last 7 days",
+						ComponentName: "Data Grid",
 						Config: (() => {
-							const departments = [
-								"Cardiology",
-								"Neurology",
-								"Orthopedics",
-								"Pediatrics",
-								"Radiology",
-							];
-							const months = [
-								"January",
-								"February",
-								"March",
-								"April",
-								"May",
-								"June",
-								"July",
-								"August",
-								"September",
-								"October",
-								"November",
-								"December",
+							const columns = [
+								{ field: "id", headerName: "Nurse_ID-Call_ID", width: 150 },
+								{ field: "nurse", headerName: "Nurse", width: 130 },
+								{ field: "patient", headerName: "Patient", width: 130 },
+								{ field: "room", headerName: "Room Number", width: 130 },
+								{ field: "callType", headerName: "Call Type", width: 130 },
+								{
+									field: "callPriority",
+									headerName: "Call Priority",
+									width: 130,
+								},
+								{
+									field: "callDescription",
+									headerName: "Call Description",
+									width: 200,
+								},
+								{
+									field: "resolutionTime",
+									headerName: "Resolution Time (mins)",
+									width: 200,
+								},
+								{
+									field: "resolutionDescription",
+									headerName: "Resolution Description",
+									width: 200,
+								},
+								{ field: "shift", headerName: "Shift", width: 130 },
+								{ field: "time", headerName: "Time", width: 150 },
+								{ field: "date", headerName: "Date", width: 150 },
 							];
 
-							const chart = TreeMap_init();
+							const callTypes = [
+								"Emergency Call",
+								"Check-up Call",
+								"Routine Call",
+							];
+							const callPriorities = ["Low", "Medium", "High"];
+							const shifts = ["Morning", "Afternoon", "Night"];
 
-							chart.series = departments.map((department) => ({
-								name: department,
-								data: months.map((month) => ({
-									x: `${department} - ${month}`,
-									y: faker.number.int({ min: 10, max: 100 }),
-									z: JSON.stringify({
-										department,
-										month,
-										nurses: Array.from(
-											{ length: faker.number.int({ min: 5, max: 10 }) },
-											() => ({
-												name: faker.person.firstName(),
-												callsResolved: faker.number.int({ min: 20, max: 50 }),
-												averageResolutionTime: faker.number.int({
-													min: 1,
-													max: 5,
-												}), // in minutes
-											})
-										),
-									}),
-								})),
-							}));
+							// Generate 10 nurses
+							const nurses = Array.from(
+								{ length: 10 },
+								() => faker.person.firstName() + " " + faker.person.lastName()
+							);
+
+							// Generate multiple calls for each nurse
+							const rows = nurses.flatMap((nurse, nurseId) =>
+								Array.from(
+									{ length: faker.number.int({ min: 5, max: 15 }) },
+									(_, callId) => {
+										const shift = faker.string.fromCharacters(shifts);
+										let date = faker.date.recent({ days: 7 });
+
+										let dateString: string = "default";
+										let timeString: string = "default";
+										switch (shift) {
+											case "Morning":
+												date.setHours(faker.number.int({ min: 6, max: 12 }));
+												break;
+											case "Afternoon":
+												date.setHours(faker.number.int({ min: 12, max: 18 }));
+												break;
+											case "Night":
+												date.setHours(faker.number.int({ min: 18, max: 24 }));
+												break;
+										}
+										dateString = date.toLocaleDateString("fr-FR");
+										timeString = date.toLocaleTimeString("fr-FR", {
+											hour: "2-digit",
+											minute: "2-digit",
+											hour12: true,
+										});
+										return {
+											id: `${nurseId}-${callId}`,
+											nurse,
+											patient:
+												faker.person.firstName() +
+												" " +
+												faker.person.lastName(),
+											room: faker.number.int({ min: 100, max: 500 }),
+											callType: faker.string.fromCharacters(callTypes),
+											callPriority: faker.string.fromCharacters(callPriorities),
+											callDescription: faker.lorem.sentence(),
+											resolutionTime: `${faker.number.int({
+												min: 1,
+												max: 60,
+											})} min`,
+											resolutionDescription: faker.lorem.sentence(),
+											shift,
+											time: timeString,
+											date: dateString,
+										};
+									}
+								)
+							);
+
+							const chart = DataGridComponent_init();
+
+							chart.columns = columns;
+							chart.rows = rows;
+
 							return chart;
 						})(),
 					},

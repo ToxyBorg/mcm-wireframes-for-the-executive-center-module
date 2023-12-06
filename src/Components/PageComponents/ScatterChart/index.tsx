@@ -13,7 +13,7 @@ import {
 	Tooltip,
 } from "chart.js";
 
-import { Scatter } from "react-chartjs-2";
+import { Chart, Scatter } from "react-chartjs-2";
 import { ScatterChartProps } from "./ScatterChartData";
 
 ChartJS.register(
