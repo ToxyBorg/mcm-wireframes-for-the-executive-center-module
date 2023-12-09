@@ -1,4 +1,4 @@
-import "server-only";
+// import "server-only";
 // "use server";
 
 import { faker } from "@faker-js/faker";
@@ -52,6 +52,24 @@ import {
 	DataGridComponentProps,
 	DataGridComponent_init,
 } from "../DataGridComponent/DataGridData";
+import {
+	BloodTypes,
+	JobTitle,
+	MedicalConditionResolutionStatus,
+	StaffMemberDepartment,
+} from "@/Components/Shared/ModalComponent/ModalComponentData";
+import {
+	staffingDepartments,
+	bloodTypes,
+	medicalConditions,
+	medicalConditionResolutionStatus,
+	shifts,
+	callPriorities,
+	callTypes,
+	generateStaff,
+	generateNurseCalls,
+	generatePatients,
+} from "./SharedConsts";
 
 type PageComponentNamesTypes =
 	| "Line Chart"
@@ -1273,13 +1291,13 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 				WrappedComponents: [
 					{
 						ComponentTitle:
-							"Incident Resolution Times by Call Type, Shift, and Staff Member for the lr for the last 7 days",
+							"Incident Resolution Times by Call Type, Shift, and Staff Member for the last 7 days",
 						ComponentName: "Data Grid",
 						Config: (() => {
 							const columns = [
-								{ field: "id", headerName: "Nurse_ID-Call_ID", width: 150 },
-								{ field: "nurse", headerName: "Nurse", width: 130 },
-								{ field: "patient", headerName: "Patient", width: 130 },
+								{ field: "id", headerName: "Nurse-ID_Patient-ID_Call-ID", width: 150 },
+								{ field: "nurse", headerName: "Nurse", width: 200 },
+								{ field: "patient", headerName: "Patient", width: 200 },
 								{ field: "room", headerName: "Room Number", width: 130 },
 								{ field: "callType", headerName: "Call Type", width: 130 },
 								{
@@ -1307,77 +1325,176 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 								{ field: "date", headerName: "Date", width: 150 },
 							];
 
-							const callTypes = [
-								"Emergency Call",
-								"Check-up Call",
-								"Routine Call",
-							];
-							const callPriorities = ["Low", "Medium", "High"];
-							const shifts = ["Morning", "Afternoon", "Night"];
 
-							// Generate 10 nurses
-							const nurses = Array.from(
-								{ length: 10 },
-								() => faker.person.firstName() + " " + faker.person.lastName()
-							);
+
+							const nurses = generateStaff({
+								jobTitle: "Nurse",
+								numberOfStaff: 10
+							})
+
 
 							// Generate multiple calls for each nurse
-							const rows = nurses.flatMap((nurse, nurseId) =>
-								Array.from(
-									{ length: faker.number.int({ min: 5, max: 15 }) },
-									(_, callId) => {
-										const shift = faker.string.fromCharacters(shifts);
-										let date = faker.date.recent({ days: 7 });
+							const rows = nurses.flatMap((nurse) => {
 
-										let dateString: string = "default";
-										let timeString: string = "default";
-										switch (shift) {
-											case "Morning":
-												date.setHours(faker.number.int({ min: 6, max: 12 }));
-												break;
-											case "Afternoon":
-												date.setHours(faker.number.int({ min: 12, max: 18 }));
-												break;
-											case "Night":
-												date.setHours(faker.number.int({ min: 18, max: 24 }));
-												break;
-										}
-										dateString = date.toLocaleDateString("fr-FR");
-										timeString = date.toLocaleTimeString("fr-FR", {
-											hour: "2-digit",
-											minute: "2-digit",
-											hour12: true,
-										});
-										return {
-											id: `${nurseId}-${callId}`,
-											nurse,
-											patient:
-												faker.person.firstName() +
-												" " +
-												faker.person.lastName(),
-											room: faker.number.int({ min: 100, max: 500 }),
-											callType: faker.string.fromCharacters(callTypes),
-											callPriority: faker.string.fromCharacters(callPriorities),
-											callDescription: faker.lorem.sentence(),
-											resolutionTime: `${faker.number.int({
-												min: 1,
-												max: 60,
-											})} min`,
-											resolutionDescription: faker.lorem.sentence(),
-											shift,
-											time: timeString,
-											date: dateString,
-										};
+								const patients = generatePatients({ numberOfPatients: faker.number.int({ min: 5, max: 12 }) })
+
+								return patients.map((patient, patient_index) => {
+
+									const callData = generateNurseCalls({ period: "Last 7 Days" })
+
+									return {
+										id: `${nurse.id}_${patient.id}_${patient_index}`,
+										nurse: nurse.name,
+										patient: patient.name,
+
+										room: callData.room,
+										callType: callData.callType,
+										callPriority: callData.callPriority,
+										callDescription: callData.callDescription,
+										resolutionTime: callData.callResolutionTime,
+										resolutionDescription: callData.resolutionDescription,
+										shift: callData.shift,
+										time: callData.time,
+										date: callData.date,
+
+										// Additional fields for the info modals
+										patientName: patient.name,
+										patientDob: patient.dob,
+										patientAge: patient.age,
+										patientAddress: patient.address,
+										patientProfilePictureURL: patient.profilePictureURL,
+										patientModalType: "Patient Info",
+										patientBloodType: patient.bloodType,
+										insuranceName: patient.insuranceName,
+										medicalHistory: patient.medicalHistory,
+
+										staffName: nurse.name,
+										staffDob: nurse.dob,
+										staffAge: nurse.age,
+										staffAddress: nurse.address,
+										staffProfilePictureURL: nurse.profilePictureURL,
+										staffModalType: "Staff Info",
+										staffBloodType: nurse.bloodType,
+										joinedDate: nurse.joinedDate,
+										department: nurse.department,
+										jobTitle: nurse.jobTitle,
+
 									}
-								)
-							);
+								})
 
-							const chart = DataGridComponent_init();
+							})
 
-							chart.columns = columns;
-							chart.rows = rows;
 
-							return chart;
+
+							const DataGridInfo = DataGridComponent_init();
+
+							DataGridInfo.columns = columns;
+							DataGridInfo.rows = rows;
+
+							return DataGridInfo;
+						})(),
+					},
+				],
+			},
+		],
+	},
+	{
+		PageLinkName: "Nurse_Call_History",
+		PageComponents: [
+			{
+				WrapperForComponents: {
+					WrapperName: "Container",
+					WrapperProps: {
+						fluid: true,
+						w: "100%",
+					},
+				},
+				WrappedComponents: [
+					{
+						ComponentTitle: "All Nurse Call History",
+						ComponentName: "Data Grid",
+						Config: (() => {
+							const columns = [
+								{ field: "id", headerName: "Nurse-ID_Patient-ID_Call-ID", width: 150 },
+								{ field: "nurse", headerName: "Nurse", width: 200 },
+								{ field: "patient", headerName: "Patient", width: 200 },
+								{ field: "room", headerName: "Room Number", width: 130 },
+								{ field: "callType", headerName: "Call Type", width: 130 },
+								{
+									field: "callPriority",
+									headerName: "Call Priority",
+									width: 130,
+								},
+								{
+									field: "callDescription",
+									headerName: "Call Description",
+									width: 200,
+								},
+								{ field: "shift", headerName: "Shift", width: 130 },
+								{ field: "time", headerName: "Time", width: 150 },
+								{ field: "date", headerName: "Date", width: 150 },
+							];
+
+
+							const nurses = generateStaff({
+								jobTitle: "Nurse",
+								numberOfStaff: 10
+							})
+
+
+							// Generate multiple calls for each nurse
+							const rows = nurses.flatMap((nurse) => {
+
+								const patients = generatePatients({ numberOfPatients: faker.number.int({ min: 5, max: 12 }) })
+
+								return patients.map((patient, patient_index) => {
+
+									const callData = generateNurseCalls({ period: "Last Year" })
+
+									return {
+										id: `${nurse.id}_${patient.id}_${patient_index}`,
+										nurse: nurse.name,
+										patient: patient.name,
+										room: callData.room,
+										callType: callData.callType,
+										callPriority: callData.callPriority,
+										callDescription: callData.callDescription,
+										shift: callData.shift,
+										time: callData.time,
+										date: callData.date,
+
+										// Additional fields for the info modals
+										patientName: patient.name,
+										patientDob: patient.dob,
+										patientAge: patient.age,
+										patientAddress: patient.address,
+										patientProfilePictureURL: patient.profilePictureURL,
+										patientModalType: "Patient Info",
+										patientBloodType: patient.bloodType,
+										insuranceName: patient.insuranceName,
+										medicalHistory: patient.medicalHistory,
+
+										staffName: nurse.name,
+										staffDob: nurse.dob,
+										staffAge: nurse.age,
+										staffAddress: nurse.address,
+										staffProfilePictureURL: nurse.profilePictureURL,
+										staffModalType: "Staff Info",
+										staffBloodType: nurse.bloodType,
+										joinedDate: nurse.joinedDate,
+										department: nurse.department,
+										jobTitle: nurse.jobTitle,
+
+									}
+								})
+
+							})
+							const DataGridInfo = DataGridComponent_init();
+
+							DataGridInfo.columns = columns;
+							DataGridInfo.rows = rows;
+
+							return DataGridInfo;
 						})(),
 					},
 				],

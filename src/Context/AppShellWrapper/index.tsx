@@ -8,9 +8,9 @@ import {
 	Group,
 	Text,
 } from "@mantine/core";
-import ColorSchemeToggles from "@/Components/Testing/ColorSchemeToggles";
 import { NavBarRootComponent } from "@/Components/NavBarRootComponent";
 import Link from "next/link";
+import { ColorSchemeToggles } from "@/Components/Shared/ColorSchemeToggles";
 
 interface Props {
 	children: React.ReactNode;
