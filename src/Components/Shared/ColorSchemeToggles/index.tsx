@@ -1,7 +1,7 @@
 "use client";
 import { useMantineColorScheme, Button, Group, Text } from "@mantine/core";
 
-const ColorSchemeToggles = () => {
+export const ColorSchemeToggles = () => {
 	const { setColorScheme, clearColorScheme } = useMantineColorScheme();
 
 	return (
@@ -41,5 +41,3 @@ const ColorSchemeToggles = () => {
 		</Group>
 	);
 };
-
-export default ColorSchemeToggles;
