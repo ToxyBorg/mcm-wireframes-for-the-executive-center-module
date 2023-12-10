@@ -1,3 +1,5 @@
+// LineChart index.tsx
+
 "use client";
 
 import {

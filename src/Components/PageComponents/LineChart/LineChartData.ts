@@ -1,3 +1,5 @@
+// LineChartData.ts
+
 import "server-only"
 
 import { faker } from "@faker-js/faker";

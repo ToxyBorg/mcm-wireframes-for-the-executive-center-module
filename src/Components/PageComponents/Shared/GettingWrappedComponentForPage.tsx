@@ -27,6 +27,8 @@ import { TreeMapProps } from "../TreeMap/TreeMapData";
 import { TreeMap } from "../TreeMap";
 import { DataGridComponentProps } from "../DataGridComponent/DataGridData";
 import { DataGridComponent } from "../DataGridComponent";
+import { HeatMapCalendarProps } from "../HeatMapCalendar/HeatMapCalendarData";
+import { HeatMapCalendar } from "../HeatMapCalendar";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -439,6 +441,36 @@ export const GettingWrappedComponentForPage = (
 						return (
 							<div key={index}>
 								The DataGrid Config For Element {index} is Wrong!
+							</div>
+						);
+					}
+				} else if (component.ComponentName === "Heat Map Calendar") {
+					function isHeatMapCalendarProps(
+						obj: typeof component.Config
+					): obj is HeatMapCalendarProps {
+						// Checking if properties exist in HeatMapCalendarProps
+						return (
+							(obj as HeatMapCalendarProps).options !== undefined &&
+							(obj as HeatMapCalendarProps).data !== undefined
+						);
+					}
+
+					if (isHeatMapCalendarProps(component.Config)) {
+						// TypeScript knows that component.Config is of type HeatMapCalendarProps here
+						// Generate a HeatMapCalendar component.Config
+						return (
+							<HeatMapCalendar
+								options={component.Config.options}
+								data={component.Config.data}
+								key={index}
+							/>
+						);
+					} else {
+						// TypeScript knows that component.Config is not of type HeatMapCalendarProps" here
+						// We return a div that tells us the config is wrong for HeatMapCalendar
+						return (
+							<div key={index}>
+								The HeatMapCalendar Config For Element {index} is Wrong!
 							</div>
 						);
 					}

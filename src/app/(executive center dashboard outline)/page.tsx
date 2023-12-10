@@ -133,7 +133,9 @@ export default function Home() {
 					</div>
 
 					<div className={styles.subsection}>
-						<h4>Nurse Call History</h4>
+						<h4>
+							<Link href={"/Nurse_Call_History"}>Nurse Call History</Link>
+						</h4>
 
 						<ul className={styles.ul}>
 							<li className={styles.li}>
