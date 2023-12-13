@@ -1,4 +1,4 @@
-import { BloodTypes, MedicalConditionResolutionStatus, StaffMemberDepartment, JobTitle } from "@/Components/Shared/ModalComponent/ModalComponentData";
+import { BloodTypes, MedicalConditionResolutionStatus, StaffMemberDepartment, JobTitle, StaffInfo, PatientInfo } from "@/Components/Shared/ModalComponent/ModalComponentData";
 
 import { faker } from '@faker-js/faker';
 
@@ -21,7 +21,7 @@ interface generateStaffProps {
 export const generateStaff = (props: generateStaffProps) => {
     const generate_Nurses = Array.from(
         { length: props.numberOfStaff },
-        () => {
+        (): Partial<StaffInfo> => {
             const dob = faker.date.past({
                 years: 70,
                 refDate: new Date(2000, 0, 1),
@@ -31,23 +31,30 @@ export const generateStaff = (props: generateStaffProps) => {
 
             return {
                 id: faker.string.uuid(),
-                name: faker.person.fullName(),
-                dob: dob.toLocaleDateString(),
-                age: age,
-                address: faker.location.streetAddress(),
-                profilePictureURL: faker.image.avatar(),
+                modalTitle: "Staff Info",
+                staffName: faker.person.fullName(),
+                staffDob: dob.toLocaleDateString(),
+                staffAge: age,
+                staffAddress: faker.location.streetAddress(),
+                staffProfilePictureURL: faker.image.avatar(),
                 joinedDate: faker.date
                     .past({ years: 1 })
                     .toLocaleDateString(),
 
-                department: faker.string.fromCharacters(staffingDepartments),
-                bloodType: faker.string.fromCharacters(bloodTypes),
-                jobTitle: props.random ? faker.string.fromCharacters(staffJobTitle) : props.jobTitle,
+                department: faker.string.fromCharacters(staffingDepartments) as StaffMemberDepartment,
+                staffBloodType: faker.string.fromCharacters(bloodTypes) as BloodTypes,
+                jobTitle: props.random ? faker.string.fromCharacters(staffJobTitle) as JobTitle :
+                    props.jobTitle ? props.jobTitle : "Nurse",
+
+                // config: {
+                //     opened: false,
+                //     onClose: () => { }
+                // }
             }
         }
     );
 
-    return generate_Nurses
+    return generate_Nurses as StaffInfo[]
 
 }
 
@@ -59,7 +66,7 @@ interface generatePatientsProps {
 export const generatePatients = (props: generatePatientsProps) => {
     const generate_patients = Array.from(
         { length: props.numberOfPatients },
-        () => {
+        (): Partial<PatientInfo> => {
             const dob = faker.date.past({
                 years: 70,
                 refDate: new Date(2000, 0, 1),
@@ -69,12 +76,13 @@ export const generatePatients = (props: generatePatientsProps) => {
 
             return {
                 id: faker.string.uuid(),
-                name: faker.person.fullName(),
-                dob: dob.toLocaleDateString(),
-                age: age,
-                address: faker.location.streetAddress(),
-                profilePictureURL: faker.image.avatar(),
-                bloodType: faker.string.fromCharacters(bloodTypes),
+                modalTitle: "Patient Info",
+                patientName: faker.person.fullName(),
+                patientDob: dob.toLocaleDateString(),
+                patientAge: age,
+                patientAddress: faker.location.streetAddress(),
+                patientProfilePictureURL: faker.image.avatar(),
+                patientBloodType: faker.string.fromCharacters(bloodTypes) as BloodTypes,
                 insuranceName: faker.company.name(),
                 medicalHistory: Array.from(
                     { length: faker.number.int({ min: 1, max: 5 }) },
@@ -93,25 +101,59 @@ export const generatePatients = (props: generatePatientsProps) => {
                             medicalConditionResolutionStatus
                         ) as MedicalConditionResolutionStatus,
                     })
-                )
+                ),
+                // config: {
+                //     opened: false,
+                //     onClose: () => { }
+                // }
             }
         }
     );
 
-    return generate_patients
+    return generate_patients as PatientInfo[]
 
 }
 
 
 interface generateNurseCallsProps {
-    period: "Last 7 Days" | "Last Year"
+    period?: "Last 7 Days" | "Last Year"
+    date?: Date
+}
+interface generateNurseCallsPropsReturn {
+
+    date: string,
+    callTime: string,
+    shift: string,
+    callResolutionTime: string,
+    callType: string,
+    room: number,
+    callPriority: string,
+    callDescription: string,
+    resolutionDescription: string,
+
 }
 
-export const generateNurseCalls = (props: generateNurseCallsProps) => {
+export const generateNurseCalls = (props: generateNurseCallsProps): generateNurseCallsPropsReturn => {
     const shift = faker.string.fromCharacters(shifts);
 
-    let date = props.period === "Last 7 Days" ? faker.date.recent({ days: 7 }) :
-        faker.date.past({ years: 1 });
+    let date: Date = new Date
+
+    if (props.date) {
+        date = props.date
+    }
+    else {
+        switch (props.period) {
+            case "Last 7 Days":
+                date = faker.date.recent({ days: 7 })
+                break
+            case "Last Year":
+                date = faker.date.past({ years: 1 });
+                break
+
+        }
+    }
+
+
 
     switch (shift) {
         case "Morning":
@@ -140,8 +182,9 @@ export const generateNurseCalls = (props: generateNurseCallsProps) => {
     const resolutionDescription = faker.lorem.sentence()
 
     return {
+
         date: dateString,
-        time: timeString,
+        callTime: timeString,
         shift: shift,
         callResolutionTime: resolutionTime,
         callType: callType,
@@ -149,6 +192,7 @@ export const generateNurseCalls = (props: generateNurseCallsProps) => {
         callPriority: callPriority,
         callDescription: callDescription,
         resolutionDescription: resolutionDescription,
+
     }
 
 

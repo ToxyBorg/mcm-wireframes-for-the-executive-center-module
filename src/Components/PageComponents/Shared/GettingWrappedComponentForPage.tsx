@@ -450,8 +450,10 @@ export const GettingWrappedComponentForPage = (
 					): obj is HeatMapCalendarProps {
 						// Checking if properties exist in HeatMapCalendarProps
 						return (
+							(obj as HeatMapCalendarProps).title !== undefined &&
 							(obj as HeatMapCalendarProps).options !== undefined &&
 							(obj as HeatMapCalendarProps).data !== undefined
+							// (obj as HeatMapCalendarProps).callsData !== undefined
 						);
 					}
 
@@ -460,8 +462,10 @@ export const GettingWrappedComponentForPage = (
 						// Generate a HeatMapCalendar component.Config
 						return (
 							<HeatMapCalendar
+								title={component.Config.title}
 								options={component.Config.options}
 								data={component.Config.data}
+								// callsData={component.Config.callsData}
 								key={index}
 							/>
 						);

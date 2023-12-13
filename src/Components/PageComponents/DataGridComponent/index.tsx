@@ -77,6 +77,7 @@ export const DataGridComponent = (props: DataGridComponentProps) => {
 				...newModalProps,
 
 				config: {
+					size: "auto",
 					opened: opened,
 					onClose: () => {
 						toggle.close();

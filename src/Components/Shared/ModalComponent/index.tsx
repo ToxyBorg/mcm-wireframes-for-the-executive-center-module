@@ -8,6 +8,8 @@ import {
 	Group,
 	Modal,
 	Paper,
+	ScrollAreaAutosize,
+	Space,
 	Stack,
 	Text,
 	Title,
@@ -15,6 +17,7 @@ import {
 import {
 	ModalComponentProps,
 	PatientInfo,
+	StaffCallsHeatMapCalendar,
 	StaffInfo,
 } from "./ModalComponentData";
 import React from "react";
@@ -26,6 +29,13 @@ export const ModalComponent = (props: ModalComponentProps) => {
 	} else if (props.modalTitle === "Patient Info") {
 		const patientProps = props as PatientInfo;
 		return <PatientModal {...patientProps} />;
+	} else if (props.modalTitle === "Heat Map Calls Info") {
+		const StaffCallsHeatMapCalendarProps = props as StaffCallsHeatMapCalendar;
+		return (
+			<StaffHeatMapCalendarCallsCalendarModal
+				{...StaffCallsHeatMapCalendarProps}
+			/>
+		);
 	}
 
 	return (
@@ -48,7 +58,7 @@ const PatientModal = (props: PatientInfo) => {
 		>
 			<Paper
 				p='md'
-				shadow='xs'
+				shadow='md'
 			>
 				<Group justify='space-between'>
 					<Avatar
@@ -80,17 +90,19 @@ const PatientModal = (props: PatientInfo) => {
 						labelPosition='left'
 					/>
 					{props.medicalHistory.map((history, index) => (
-						<Paper
-							shadow='xs'
-							p='xl'
-							key={index}
-						>
-							<Title order={5}>Condition: {history.condition}</Title>
-							<Title order={5}>Occurred On: {history.occurredOn}</Title>
-							<Title order={5}>Diagnosis: {history.diagnosis}</Title>
-							<Title order={5}>Treated: {history.treated}</Title>
-							<Title order={5}>Admitted Here: {history.admittedHere}</Title>
-						</Paper>
+						<div key={index}>
+							<Paper
+								shadow='md'
+								p='xl'
+							>
+								<Title order={5}>Condition: {history.condition}</Title>
+								<Title order={5}>Occurred On: {history.occurredOn}</Title>
+								<Title order={5}>Diagnosis: {history.diagnosis}</Title>
+								<Title order={5}>Treated: {history.treated}</Title>
+								<Title order={5}>Admitted Here: {history.admittedHere}</Title>
+							</Paper>
+							<Space h={"md"} />
+						</div>
 					))}
 				</>
 			</Paper>
@@ -107,7 +119,7 @@ const StaffModal = (props: StaffInfo) => {
 		>
 			<Paper
 				p='md'
-				shadow='xs'
+				shadow='md'
 			>
 				<Group justify='space-between'>
 					<Avatar
@@ -136,6 +148,76 @@ const StaffModal = (props: StaffInfo) => {
 					<Title order={5}>Job Title: {props.jobTitle}</Title>
 				</>
 			</Paper>
+		</Modal>
+	);
+};
+
+const StaffHeatMapCalendarCallsCalendarModal = (
+	props: StaffCallsHeatMapCalendar
+) => {
+	return (
+		<Modal
+			{...props.config}
+			closeOnClickOutside
+			centered
+			title={props.modalTitle}
+		>
+			{props.staffCalls.map((staff, index) => {
+				return (
+					<>
+						<Paper
+							key={staff.staff.id}
+							p='md'
+							shadow='md'
+						>
+							<Group justify='space-between'>
+								<Avatar
+									color='blue'
+									radius='sm'
+									src={staff.staff.staffProfilePictureURL}
+									alt={staff.staff.staffName}
+									size={"xl"}
+								/>
+
+								<Title order={2}>{staff.staff.staffName}</Title>
+								<Title order={5}>Calls: {staff.calls.length}</Title>
+							</Group>
+
+							<>
+								<Divider
+									my='xs'
+									label='Call Information'
+									labelPosition='left'
+								/>
+								<ScrollAreaAutosize
+									mah={300}
+									mx='auto'
+								>
+									{staff.calls.map((call, callIndex) => (
+										<div key={callIndex}>
+											<Paper
+												p='xs'
+												shadow='md'
+											>
+												<Title order={5}>Date: {call.date}</Title>
+												<Title order={5}>Call Type: {call.callType}</Title>
+												<Title order={5}>Room: {call.room}</Title>
+
+												<Title order={5}>Call Time: {call.callTime}</Title>
+												<Title order={5}>
+													Resolution Time: {call.callResolutionTime}
+												</Title>
+											</Paper>
+											<Space h={"md"} />
+										</div>
+									))}
+								</ScrollAreaAutosize>
+							</>
+						</Paper>
+						<Space h={"md"} />
+					</>
+				);
+			})}
 		</Modal>
 	);
 };
