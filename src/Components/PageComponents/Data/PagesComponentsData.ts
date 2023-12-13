@@ -15,16 +15,14 @@ import {
 } from "../VerticalBarChart/VerticalBarChartData";
 import {
 	VirtualizedListProps,
-	VirtualizedList_init,
 } from "../VirtualizedList/VirtualizedListData";
 import {
 	CenterProps,
 	ContainerProps,
-	Flex,
 	FlexProps,
 	TabsProps,
 } from "@mantine/core";
-import { Chart, ChartData, ChartOptions, Color } from "chart.js";
+import { ChartData, ChartOptions } from "chart.js";
 import {
 	DoughnutChartProps,
 	DoughnutChart_init,
@@ -44,33 +42,20 @@ import {
 import { RadarChartProps, RadarChart_init } from "../RadarChart/RadarChartData";
 import {
 	ScatterChartProps,
-	ScatterChart_init,
 } from "../ScatterChart/ScatterChartData";
-import { TreeMapProps, TreeMap_init } from "../TreeMap/TreeMapData";
+import { TreeMapProps } from "../TreeMap/TreeMapData";
 
 import {
 	DataGridComponentProps,
 	DataGridComponent_init,
 } from "../DataGridComponent/DataGridData";
 import {
-	BloodTypes,
-	JobTitle,
-	MedicalConditionResolutionStatus,
-	StaffMemberDepartment,
-} from "@/Components/Shared/ModalComponent/ModalComponentData";
-import {
-	staffingDepartments,
-	bloodTypes,
-	medicalConditions,
-	medicalConditionResolutionStatus,
-	shifts,
-	callPriorities,
-	callTypes,
 	generateStaff,
 	generateNurseCalls,
 	generatePatients,
 } from "./SharedConsts";
 import { HeatMapCalendarProps, HeatMapCalendar_init } from "../HeatMapCalendar/HeatMapCalendarData";
+import { StaffCallsHeatMapCalendar, staffCallsType } from "@/Components/Shared/ModalComponent/ModalComponentData";
 
 type PageComponentNamesTypes =
 	| "Line Chart"
@@ -1304,14 +1289,75 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 								numberOfStaff: 10
 							})
 
-							const patients = generatePatients({ numberOfPatients: faker.number.int({ min: 5, max: 12 }) })
+							// const patients = generatePatients({ numberOfPatients: faker.number.int({ min: 5, max: 12 }) })
 
 
+
+							const currentYear = new Date().getFullYear();
+							const currentDayOfYear = Math.floor((Date.now() - new Date(currentYear, 0, 1).getTime()) / (1000 * 60 * 60 * 24));
+
+
+							const staffMockData = Array.from({ length: currentDayOfYear }, (_, idx) => {
+								const count = faker.number.int({ min: 1, max: 60 });
+								let remainingCalls = count;
+
+								const date = new Date(currentYear, 0, idx + 1)
+								const dateString = date.toISOString().split("T")[0]
+								const staffCalls: staffCallsType[] = nurses.map((nurse, i) => {
+									let nurseCalls;
+
+									// For the last nurse, assign all remaining calls
+									if (i === nurses.length - 1) {
+										nurseCalls = remainingCalls;
+									} else {
+										// Randomly assign calls to the nurse, but leave at least one call for each remaining nurse
+										const maxCalls = Math.max(0, remainingCalls - (nurses.length - i - 1));
+										nurseCalls = faker.number.int({ min: 0, max: maxCalls });
+									}
+
+									remainingCalls -= nurseCalls;
+
+									return {
+										staff: nurse,
+										numberOfCalls: nurseCalls,
+										calls: Array.from({ length: nurseCalls }, () => {
+											const generatingNurseCall = generateNurseCalls({
+												date: date
+											});
+
+											return {
+												date: dateString,
+												callType: generatingNurseCall.callType,
+												room: generatingNurseCall.room,
+												callTime: generatingNurseCall.callTime,
+												callResolutionTime: generatingNurseCall.callResolutionTime,
+											};
+										}),
+									};
+								}).filter(staffCall => staffCall.numberOfCalls > 0);
+
+
+								return {
+									modalTitle: "Heat Map Calls Info",
+									date: dateString,
+									count: count,
+									staffCalls: staffCalls,
+
+								} as StaffCallsHeatMapCalendar
+							});
 
 
 							const HeatMapCalendar = HeatMapCalendar_init();
 
+							HeatMapCalendar.data = staffMockData
 
+							HeatMapCalendar.options = {
+								...HeatMapCalendar.options,
+								startDate: new Date(currentYear, 0, 1), // Start from January of the current year
+								endDate: new Date(), // End at the current day
+							}
+
+							HeatMapCalendar.title = "Nurse Calls Annual Heat Map Calendar"
 
 							return HeatMapCalendar;
 						})(),
@@ -1375,34 +1421,34 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 
 									return {
 										id: `${nurse.id}_${patient.id}_${patient_index}`,
-										nurse: nurse.name,
-										patient: patient.name,
+										nurse: nurse.staffName,
+										patient: patient.patientName,
 										room: callData.room,
 										callType: callData.callType,
 										callPriority: callData.callPriority,
 										callDescription: callData.callDescription,
 										shift: callData.shift,
-										time: callData.time,
+										time: callData.callTime,
 										date: callData.date,
 
 										// Additional fields for the info modals
-										patientName: patient.name,
-										patientDob: patient.dob,
-										patientAge: patient.age,
-										patientAddress: patient.address,
-										patientProfilePictureURL: patient.profilePictureURL,
+										patientName: patient.patientName,
+										patientDob: patient.patientDob,
+										patientAge: patient.patientAge,
+										patientAddress: patient.patientAddress,
+										patientProfilePictureURL: patient.patientProfilePictureURL,
 										patientModalType: "Patient Info",
-										patientBloodType: patient.bloodType,
+										patientBloodType: patient.patientBloodType,
 										insuranceName: patient.insuranceName,
 										medicalHistory: patient.medicalHistory,
 
-										staffName: nurse.name,
-										staffDob: nurse.dob,
-										staffAge: nurse.age,
-										staffAddress: nurse.address,
-										staffProfilePictureURL: nurse.profilePictureURL,
+										staffName: nurse.staffName,
+										staffDob: nurse.staffDob,
+										staffAge: nurse.staffAge,
+										staffAddress: nurse.staffAddress,
+										staffProfilePictureURL: nurse.staffProfilePictureURL,
 										staffModalType: "Staff Info",
-										staffBloodType: nurse.bloodType,
+										staffBloodType: nurse.staffBloodType,
 										joinedDate: nurse.joinedDate,
 										department: nurse.department,
 										jobTitle: nurse.jobTitle,
