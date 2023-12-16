@@ -14,6 +14,7 @@ export const LineChart_init = (inputs?: Partial<LineChartProps>): LineChartProps
     const defaults: LineChartProps = {
         options: {
             responsive: true,
+
             scales: {
                 y: {
                     beginAtZero: true,

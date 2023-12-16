@@ -1,34 +1,34 @@
 import "server-only";
 
-import { PageWrappedComponentsInterface } from "../Data/PagesComponentsData";
-import { LineChart } from "../LineChart";
-import { LineChartProps } from "../LineChart/LineChartData";
-import { PieChart } from "../PieChart";
-import { PieChartProps } from "../PieChart/PieChartData";
-import { TableComponent } from "../TableComponent";
-import { TableComponentProps } from "../TableComponent/TableComponentData";
-import { VerticalBarChart } from "../VerticalBarChart";
-import { VerticalBarChartProps } from "../VerticalBarChart/VerticalBarChartData";
-import { VirtualizedList } from "../VirtualizedList";
-import { VirtualizedListProps } from "../VirtualizedList/VirtualizedListData";
-import { DoughnutChartProps } from "../DoughnutChart/DoughnutChartData";
-import { DoughnutChart } from "../DoughnutChart";
-import { BigCalendarComponentProps } from "../BigCalendarComponent/BigCalendarComponentData";
-import { BigCalendarComponent } from "../BigCalendarComponent";
-import { CardsCarouselComponentProps } from "../CardsCarouselComponent/CardsCarouselComponentData";
-import CardsCarouselComponent from "../CardsCarouselComponent";
-import { BubbleChartProps } from "../BubbleChart/BubbleChartData";
-import { BubbleChart } from "../BubbleChart";
-import { RadarChartProps } from "../RadarChart/RadarChartData";
-import { RadarChart } from "../RadarChart";
-import { ScatterChartProps } from "../ScatterChart/ScatterChartData";
-import { ScatterChart } from "../ScatterChart";
-import { TreeMapProps } from "../TreeMap/TreeMapData";
-import { TreeMap } from "../TreeMap";
-import { DataGridComponentProps } from "../DataGridComponent/DataGridData";
-import { DataGridComponent } from "../DataGridComponent";
-import { HeatMapCalendarProps } from "../HeatMapCalendar/HeatMapCalendarData";
-import { HeatMapCalendar } from "../HeatMapCalendar";
+import { PageWrappedComponentsInterface } from "./Data/PagesComponentsData";
+import { LineChart } from "../react-chartjs-2/LineChart";
+import { LineChartProps } from "../react-chartjs-2/LineChart/LineChartData";
+import { PieChart } from "../react-chartjs-2/PieChart";
+import { PieChartProps } from "../react-chartjs-2/PieChart/PieChartData";
+import { TableComponent } from "../mantine/TableComponent";
+import { TableComponentProps } from "../mantine/TableComponent/TableComponentData";
+import { VerticalBarChart } from "../react-chartjs-2/VerticalBarChart";
+import { VerticalBarChartProps } from "../react-chartjs-2/VerticalBarChart/VerticalBarChartData";
+import { VirtualizedList } from "../react-virtuoso/VirtualizedList";
+import { VirtualizedListProps } from "../react-virtuoso/VirtualizedList/VirtualizedListData";
+import { DoughnutChartProps } from "../react-chartjs-2/DoughnutChart/DoughnutChartData";
+import { DoughnutChart } from "../react-chartjs-2/DoughnutChart";
+import { BigCalendarComponentProps } from "../react-big-calendar/BigCalendarComponent/BigCalendarComponentData";
+import { BigCalendarComponent } from "../react-big-calendar/BigCalendarComponent";
+import { CardsCarouselComponentProps } from "../mantine/CardsCarouselComponent/CardsCarouselComponentData";
+import CardsCarouselComponent from "../mantine/CardsCarouselComponent";
+import { BubbleChartProps } from "../react-chartjs-2/BubbleChart/BubbleChartData";
+import { BubbleChart } from "../react-chartjs-2/BubbleChart";
+import { RadarChartProps } from "../react-chartjs-2/RadarChart/RadarChartData";
+import { RadarChart } from "../react-chartjs-2/RadarChart";
+import { ScatterChartProps } from "../react-chartjs-2/ScatterChart/ScatterChartData";
+import { ScatterChart } from "../react-chartjs-2/ScatterChart";
+import { TreeMapProps } from "../react-apexcharts/TreeMap/TreeMapData";
+import { TreeMap } from "../react-apexcharts/TreeMap";
+import { DataGridComponentProps } from "../mui/x-data-grid/DataGridData";
+import { DataGridComponent } from "../mui/x-data-grid";
+import { UiwHeatMapCalendarProps } from "../uiw/react-heat-map/UiwHeatMapCalendarData";
+import { UiwHeatMapCalendar } from "../uiw/react-heat-map";
 
 interface GettingWrappedComponentForPageInterface {
 	PagesComponentData: PageWrappedComponentsInterface[];
@@ -444,24 +444,24 @@ export const GettingWrappedComponentForPage = (
 							</div>
 						);
 					}
-				} else if (component.ComponentName === "Heat Map Calendar") {
-					function isHeatMapCalendarProps(
+				} else if (component.ComponentName === "Uiw Heat Map Calendar") {
+					function isUiwHeatMapCalendarProps(
 						obj: typeof component.Config
-					): obj is HeatMapCalendarProps {
-						// Checking if properties exist in HeatMapCalendarProps
+					): obj is UiwHeatMapCalendarProps {
+						// Checking if properties exist in UiwHeatMapCalendarProps
 						return (
-							(obj as HeatMapCalendarProps).title !== undefined &&
-							(obj as HeatMapCalendarProps).options !== undefined &&
-							(obj as HeatMapCalendarProps).data !== undefined
-							// (obj as HeatMapCalendarProps).callsData !== undefined
+							(obj as UiwHeatMapCalendarProps).title !== undefined &&
+							(obj as UiwHeatMapCalendarProps).options !== undefined &&
+							(obj as UiwHeatMapCalendarProps).data !== undefined
+							// (obj as UiwHeatMapCalendarProps).callsData !== undefined
 						);
 					}
 
-					if (isHeatMapCalendarProps(component.Config)) {
-						// TypeScript knows that component.Config is of type HeatMapCalendarProps here
-						// Generate a HeatMapCalendar component.Config
+					if (isUiwHeatMapCalendarProps(component.Config)) {
+						// TypeScript knows that component.Config is of type UiwHeatMapCalendarProps here
+						// Generate a UiwHeatMapCalendar component.Config
 						return (
-							<HeatMapCalendar
+							<UiwHeatMapCalendar
 								title={component.Config.title}
 								options={component.Config.options}
 								data={component.Config.data}
@@ -470,11 +470,11 @@ export const GettingWrappedComponentForPage = (
 							/>
 						);
 					} else {
-						// TypeScript knows that component.Config is not of type HeatMapCalendarProps" here
-						// We return a div that tells us the config is wrong for HeatMapCalendar
+						// TypeScript knows that component.Config is not of type UiwHeatMapCalendarProps" here
+						// We return a div that tells us the config is wrong for UiwHeatMapCalendar
 						return (
 							<div key={index}>
-								The HeatMapCalendar Config For Element {index} is Wrong!
+								The UiwHeatMapCalendar Config For Element {index} is Wrong!
 							</div>
 						);
 					}

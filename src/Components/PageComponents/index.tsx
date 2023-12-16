@@ -1,6 +1,6 @@
 import "server-only";
 
-import { PagesComponentData } from "./Data/PagesComponentsData";
+import { PagesComponentData } from "./Shared/Data/PagesComponentsData";
 import { WrapperWithWrappedComponents } from "./Shared/WrapperWithWrappedComponents";
 interface PageComponentsProps {
 	PageLinkName: string;

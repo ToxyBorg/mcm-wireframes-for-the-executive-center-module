@@ -6,22 +6,22 @@
 import { faker } from "@faker-js/faker";
 import { HeatMapProps, HeatMapValue } from "@uiw/react-heat-map";
 
-export interface HeatMapCalendarProps {
+export interface UiwHeatMapCalendarProps {
 	title: string;
 	options: HeatMapProps;
 	data: HeatMapValue[];
 }
 
-export const HeatMapCalendar_init = (
-	inputs?: Partial<HeatMapCalendarProps>
-): HeatMapCalendarProps => {
+export const UiwHeatMapCalendar_init = (
+	inputs?: Partial<UiwHeatMapCalendarProps>
+): UiwHeatMapCalendarProps => {
 	const currentYear = new Date().getFullYear();
 	const currentDayOfYear = Math.floor(
 		(Date.now() - new Date(currentYear, 0, 1).getTime()) / (1000 * 60 * 60 * 24)
 	);
 
-	const defaults: HeatMapCalendarProps = {
-		title: "Default Heat Map Calendar",
+	const defaults: UiwHeatMapCalendarProps = {
+		title: "Default Uiw Heat Map Calendar",
 		options: {
 			rectSize: 25,
 			legendCellSize: 15,

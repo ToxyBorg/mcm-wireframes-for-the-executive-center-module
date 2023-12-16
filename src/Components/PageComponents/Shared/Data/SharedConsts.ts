@@ -12,6 +12,127 @@ export const callTypes = [
     "Routine Call",
 ];
 
+export const bloodTypes: Array<BloodTypes> = [
+    "A+",
+    "A-",
+    "B+",
+    "B-",
+    "AB+",
+    "AB-",
+    "O+",
+    "O-",
+];
+export const medicalConditions = ["Condition 1", "Condition 2", "Condition 3"];
+export const medicalConditionResolutionStatus: Array<MedicalConditionResolutionStatus> =
+    ["Yes", "No", "On-going"];
+
+export const staffingDepartments: Array<StaffMemberDepartment> = [
+    "Cardiology",
+    "Neurology",
+    "Orthopedics",
+    "Radiology",
+    "Gastroenterology",
+];
+export const staffJobTitle: Array<JobTitle> = [
+    "Doctor",
+    "Nurse",
+    "Technician",
+    "Administrative",
+    "Pharmacist",
+    "Other",
+];
+
+interface generateNurseCallsProps {
+    period?: "Last 7 Days" | "Last 30 Days" | "Last Year"
+    date?: Date
+}
+export interface generateNurseCallsPropsReturn {
+
+    date: string,
+    callTime: string,
+    shift: string,
+    // callResolutionTimeString: string,
+    callResolutionTime: number,
+    callType: string,
+    room: number,
+    callPriority: string,
+    callDescription: string,
+    resolutionDescription: string,
+
+}
+
+export const generateNurseCalls = (props: generateNurseCallsProps): generateNurseCallsPropsReturn => {
+    const shift = faker.string.fromCharacters(shifts);
+
+    let date: Date = new Date
+
+    if (props.date) {
+        date = props.date
+    }
+    else {
+        switch (props.period) {
+
+            case "Last 7 Days":
+                date = faker.date.recent({ days: 7 })
+                break
+            case "Last 30 Days":
+                date = faker.date.recent({ days: 30 })
+                break
+            case "Last Year":
+                date = faker.date.past({ years: 1 });
+                break
+
+        }
+    }
+
+
+
+    switch (shift) {
+        case "Morning":
+            date.setHours(faker.number.int({ min: 6, max: 12 }));
+            break;
+        case "Afternoon":
+            date.setHours(faker.number.int({ min: 12, max: 18 }));
+            break;
+        case "Night":
+            date.setHours(faker.number.int({ min: 18, max: 24 }));
+            break;
+    }
+    const dateString = date.toLocaleDateString("fr-FR");
+    const timeString = date.toLocaleTimeString("fr-FR", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+    });
+
+    const resolutionTime = faker.number.int({ min: 1, max: 120 })
+    // const resolutionTimeString = `${resolutionTime} min`
+
+    const callType = faker.string.fromCharacters(callTypes)
+    const room = faker.number.int({ min: 100, max: 500 })
+    const callPriority = faker.string.fromCharacters(callPriorities)
+    const callDescription = faker.lorem.sentence()
+    const resolutionDescription = faker.lorem.sentence()
+
+    return {
+
+        date: dateString,
+        callTime: timeString,
+        shift: shift,
+        // callResolutionTimeString: resolutionTimeString,
+        callResolutionTime: resolutionTime,
+        callType: callType,
+        room: room,
+        callPriority: callPriority,
+        callDescription: callDescription,
+        resolutionDescription: resolutionDescription,
+
+    }
+
+
+}
+
+
 interface generateStaffProps {
     numberOfStaff: number;
     jobTitle?: JobTitle;
@@ -46,10 +167,6 @@ export const generateStaff = (props: generateStaffProps) => {
                 jobTitle: props.random ? faker.string.fromCharacters(staffJobTitle) as JobTitle :
                     props.jobTitle ? props.jobTitle : "Nurse",
 
-                // config: {
-                //     opened: false,
-                //     onClose: () => { }
-                // }
             }
         }
     );
@@ -102,10 +219,7 @@ export const generatePatients = (props: generatePatientsProps) => {
                         ) as MedicalConditionResolutionStatus,
                     })
                 ),
-                // config: {
-                //     opened: false,
-                //     onClose: () => { }
-                // }
+
             }
         }
     );
@@ -115,115 +229,5 @@ export const generatePatients = (props: generatePatientsProps) => {
 }
 
 
-interface generateNurseCallsProps {
-    period?: "Last 7 Days" | "Last Year"
-    date?: Date
-}
-interface generateNurseCallsPropsReturn {
-
-    date: string,
-    callTime: string,
-    shift: string,
-    callResolutionTime: string,
-    callType: string,
-    room: number,
-    callPriority: string,
-    callDescription: string,
-    resolutionDescription: string,
-
-}
-
-export const generateNurseCalls = (props: generateNurseCallsProps): generateNurseCallsPropsReturn => {
-    const shift = faker.string.fromCharacters(shifts);
-
-    let date: Date = new Date
-
-    if (props.date) {
-        date = props.date
-    }
-    else {
-        switch (props.period) {
-            case "Last 7 Days":
-                date = faker.date.recent({ days: 7 })
-                break
-            case "Last Year":
-                date = faker.date.past({ years: 1 });
-                break
-
-        }
-    }
 
 
-
-    switch (shift) {
-        case "Morning":
-            date.setHours(faker.number.int({ min: 6, max: 12 }));
-            break;
-        case "Afternoon":
-            date.setHours(faker.number.int({ min: 12, max: 18 }));
-            break;
-        case "Night":
-            date.setHours(faker.number.int({ min: 18, max: 24 }));
-            break;
-    }
-    const dateString = date.toLocaleDateString("fr-FR");
-    const timeString = date.toLocaleTimeString("fr-FR", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-    });
-
-    const resolutionTime = `${faker.number.int({ min: 1, max: 60 })} min`
-
-    const callType = faker.string.fromCharacters(callTypes)
-    const room = faker.number.int({ min: 100, max: 500 })
-    const callPriority = faker.string.fromCharacters(callPriorities)
-    const callDescription = faker.lorem.sentence()
-    const resolutionDescription = faker.lorem.sentence()
-
-    return {
-
-        date: dateString,
-        callTime: timeString,
-        shift: shift,
-        callResolutionTime: resolutionTime,
-        callType: callType,
-        room: room,
-        callPriority: callPriority,
-        callDescription: callDescription,
-        resolutionDescription: resolutionDescription,
-
-    }
-
-
-}
-
-export const bloodTypes: Array<BloodTypes> = [
-    "A+",
-    "A-",
-    "B+",
-    "B-",
-    "AB+",
-    "AB-",
-    "O+",
-    "O-",
-];
-export const medicalConditions = ["Condition 1", "Condition 2", "Condition 3"];
-export const medicalConditionResolutionStatus: Array<MedicalConditionResolutionStatus> =
-    ["Yes", "No", "On-going"];
-
-export const staffingDepartments: Array<StaffMemberDepartment> = [
-    "Cardiology",
-    "Neurology",
-    "Orthopedics",
-    "Radiology",
-    "Gastroenterology",
-];
-export const staffJobTitle: Array<JobTitle> = [
-    "Doctor",
-    "Nurse",
-    "Technician",
-    "Administrative",
-    "Pharmacist",
-    "Other",
-];

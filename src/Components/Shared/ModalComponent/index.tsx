@@ -205,7 +205,7 @@ const StaffHeatMapCalendarCallsCalendarModal = (
 
 												<Title order={5}>Call Time: {call.callTime}</Title>
 												<Title order={5}>
-													Resolution Time: {call.callResolutionTime}
+													Resolution Time: {call.callResolutionTime} min
 												</Title>
 											</Paper>
 											<Space h={"md"} />

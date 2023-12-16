@@ -3,7 +3,6 @@
 "use client";
 
 import HeatMap, { HeatMapValue } from "@uiw/react-heat-map";
-import { HeatMapCalendarProps } from "./HeatMapCalendarData";
 import { Center, Title, Tooltip, useMantineColorScheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import React from "react";
@@ -13,8 +12,9 @@ import {
 	StaffCallsHeatMapCalendar_init,
 } from "@/Components/Shared/ModalComponent/ModalComponentData";
 import { ModalComponent } from "@/Components/Shared/ModalComponent";
+import { UiwHeatMapCalendarProps } from "./UiwHeatMapCalendarData";
 
-export const HeatMapCalendar = (props: HeatMapCalendarProps) => {
+export const UiwHeatMapCalendar = (props: UiwHeatMapCalendarProps) => {
 	const { colorScheme } = useMantineColorScheme();
 
 	const [opened, toggle] = useDisclosure(false);
