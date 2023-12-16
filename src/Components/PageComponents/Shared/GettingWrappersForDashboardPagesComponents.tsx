@@ -16,7 +16,7 @@ import {
 import {
 	PageComponentsWrapperInterface,
 	PageWrappedComponentsInterface,
-} from "../Data/PagesComponentsData";
+} from "./Data/PagesComponentsData";
 import { GettingWrappedComponentForPage } from "./GettingWrappedComponentForPage";
 
 interface GettingWrappersForDashboardPagesComponentsInterface {

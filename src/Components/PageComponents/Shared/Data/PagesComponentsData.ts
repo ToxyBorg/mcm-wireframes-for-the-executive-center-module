@@ -3,19 +3,19 @@
 
 import { faker } from "@faker-js/faker";
 
-import { LineChartProps, LineChart_init } from "../LineChart/LineChartData";
-import { PieChartProps, PieChart_init } from "../PieChart/PieChartData";
+import { LineChartProps, LineChart_init } from "../../react-chartjs-2/LineChart/LineChartData";
+import { PieChartProps, PieChart_init } from "../../react-chartjs-2/PieChart/PieChartData";
 import {
 	TableComponentProps,
 	TableComponent_init,
-} from "../TableComponent/TableComponentData";
+} from "../../mantine/TableComponent/TableComponentData";
 import {
 	VerticalBarChartProps,
 	VerticalBarChart_init,
-} from "../VerticalBarChart/VerticalBarChartData";
+} from "../../react-chartjs-2/VerticalBarChart/VerticalBarChartData";
 import {
 	VirtualizedListProps,
-} from "../VirtualizedList/VirtualizedListData";
+} from "../../react-virtuoso/VirtualizedList/VirtualizedListData";
 import {
 	CenterProps,
 	ContainerProps,
@@ -26,36 +26,38 @@ import { ChartData, ChartOptions } from "chart.js";
 import {
 	DoughnutChartProps,
 	DoughnutChart_init,
-} from "../DoughnutChart/DoughnutChartData";
+} from "../../react-chartjs-2/DoughnutChart/DoughnutChartData";
 import {
 	BigCalendarComponentProps,
 	BigCalendarComponent_init,
-} from "../BigCalendarComponent/BigCalendarComponentData";
+} from "../../react-big-calendar/BigCalendarComponent/BigCalendarComponentData";
 import {
 	CardsCarouselComponentProps,
 	CardsCarouselComponent_init,
-} from "../CardsCarouselComponent/CardsCarouselComponentData";
+} from "../../mantine/CardsCarouselComponent/CardsCarouselComponentData";
 import {
 	BubbleChartProps,
 	BubbleChart_init,
-} from "../BubbleChart/BubbleChartData";
-import { RadarChartProps, RadarChart_init } from "../RadarChart/RadarChartData";
+} from "../../react-chartjs-2/BubbleChart/BubbleChartData";
+import { RadarChartProps, RadarChart_init } from "../../react-chartjs-2/RadarChart/RadarChartData";
 import {
 	ScatterChartProps,
-} from "../ScatterChart/ScatterChartData";
-import { TreeMapProps } from "../TreeMap/TreeMapData";
+} from "../../react-chartjs-2/ScatterChart/ScatterChartData";
+import { TreeMapProps } from "../../react-apexcharts/TreeMap/TreeMapData";
 
 import {
 	DataGridComponentProps,
 	DataGridComponent_init,
-} from "../DataGridComponent/DataGridData";
+} from "../../mui/x-data-grid/DataGridData";
 import {
 	generateStaff,
 	generateNurseCalls,
 	generatePatients,
+	callTypes,
+	generateNurseCallsPropsReturn,
 } from "./SharedConsts";
-import { HeatMapCalendarProps, HeatMapCalendar_init } from "../HeatMapCalendar/HeatMapCalendarData";
 import { StaffCallsHeatMapCalendar, staffCallsType } from "@/Components/Shared/ModalComponent/ModalComponentData";
+import { UiwHeatMapCalendarProps, UiwHeatMapCalendar_init } from "../../uiw/react-heat-map/UiwHeatMapCalendarData";
 
 type PageComponentNamesTypes =
 	| "Line Chart"
@@ -71,7 +73,7 @@ type PageComponentNamesTypes =
 	| "Scatter Chart"
 	| "Tree Map"
 	| "Data Grid"
-	| "Heat Map Calendar"
+	| "Uiw Heat Map Calendar"
 type PageComponentConfigTypes =
 	| LineChartProps
 	| PieChartProps
@@ -86,7 +88,7 @@ type PageComponentConfigTypes =
 	| ScatterChartProps
 	| TreeMapProps
 	| DataGridComponentProps
-	| HeatMapCalendarProps
+	| UiwHeatMapCalendarProps
 
 type WrapperNamesTypes = "Flex" | "Container" | "Div" | "Tabs" | "Center";
 type WrapperPropsTypes =
@@ -1279,8 +1281,8 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 				WrappedComponents: [
 					{
 						ComponentTitle:
-							"Incident Resolution Times by Call Type, Shift, and Staff Member for the last 7 days",
-						ComponentName: "Heat Map Calendar",
+							"Nurse Calls Annual Heat Map Calendar With Info Modals",
+						ComponentName: "Uiw Heat Map Calendar",
 						Config: (() => {
 
 
@@ -1288,10 +1290,6 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 								jobTitle: "Nurse",
 								numberOfStaff: 10
 							})
-
-							// const patients = generatePatients({ numberOfPatients: faker.number.int({ min: 5, max: 12 }) })
-
-
 
 							const currentYear = new Date().getFullYear();
 							const currentDayOfYear = Math.floor((Date.now() - new Date(currentYear, 0, 1).getTime()) / (1000 * 60 * 60 * 24));
@@ -1347,7 +1345,7 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 							});
 
 
-							const HeatMapCalendar = HeatMapCalendar_init();
+							const HeatMapCalendar = UiwHeatMapCalendar_init();
 
 							HeatMapCalendar.data = staffMockData
 
@@ -1364,6 +1362,7 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 					},
 				],
 			},
+
 		],
 	},
 	{
@@ -1467,13 +1466,7 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 					},
 				],
 			},
-		],
-	},
-];
-
-
-/*
-{
+			{
 				WrapperForComponents: {
 					WrapperName: "Container",
 					WrapperProps: {
@@ -1483,110 +1476,76 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 				},
 				WrappedComponents: [
 					{
-						ComponentTitle:
-							"Incident Resolution Times by Call Type, Shift, and Staff Member for the last 7 days",
-						ComponentName: "Data Grid",
+						ComponentTitle: "Nurse Call Type Trends",
+						ComponentName: "Line Chart",
 						Config: (() => {
-							const columns = [
-								{ field: "id", headerName: "Nurse-ID_Patient-ID_Call-ID", width: 150 },
-								{ field: "nurse", headerName: "Nurse", width: 200 },
-								{ field: "patient", headerName: "Patient", width: 200 },
-								{ field: "room", headerName: "Room Number", width: 130 },
-								{ field: "callType", headerName: "Call Type", width: 130 },
-								{
-									field: "callPriority",
-									headerName: "Call Priority",
-									width: 130,
-								},
-								{
-									field: "callDescription",
-									headerName: "Call Description",
-									width: 200,
-								},
-								{
-									field: "resolutionTime",
-									headerName: "Resolution Time (mins)",
-									width: 200,
-								},
-								{
-									field: "resolutionDescription",
-									headerName: "Resolution Description",
-									width: 200,
-								},
-								{ field: "shift", headerName: "Shift", width: 130 },
-								{ field: "time", headerName: "Time", width: 150 },
-								{ field: "date", headerName: "Date", width: 150 },
-							];
 
+							// Generate an array of the last 30 days
+							const generateDateArray = () => {
+								const dates = [];
+								for (let i = 29; i >= 0; i--) {
+									const date = new Date();
+									date.setDate(date.getDate() - i);
+									dates.push(date);
+								}
+								return dates;
+							};
 
+							const dates = generateDateArray();
 
-							const nurses = generateStaff({
-								jobTitle: "Nurse",
-								numberOfStaff: 10
-							})
+							// Generate mock data
+							const generateMockData = () => {
+								const data: { [key: string]: number[] } = {};
+								callTypes.map((callType) => {
+									const tempResolutionTimes: number[] = []
+									dates.map((date) => {
+										tempResolutionTimes.push(faker.number.int({ min: 1, max: 60 }))
+									})
 
-
-							// Generate multiple calls for each nurse
-							const rows = nurses.flatMap((nurse) => {
-
-								const patients = generatePatients({ numberOfPatients: faker.number.int({ min: 5, max: 12 }) })
-
-								return patients.map((patient, patient_index) => {
-
-									const callData = generateNurseCalls({ period: "Last 7 Days" })
-
-									return {
-										id: `${nurse.id}_${patient.id}_${patient_index}`,
-										nurse: nurse.name,
-										patient: patient.name,
-
-										room: callData.room,
-										callType: callData.callType,
-										callPriority: callData.callPriority,
-										callDescription: callData.callDescription,
-										resolutionTime: callData.callResolutionTime,
-										resolutionDescription: callData.resolutionDescription,
-										shift: callData.shift,
-										time: callData.time,
-										date: callData.date,
-
-										// Additional fields for the info modals
-										patientName: patient.name,
-										patientDob: patient.dob,
-										patientAge: patient.age,
-										patientAddress: patient.address,
-										patientProfilePictureURL: patient.profilePictureURL,
-										patientModalType: "Patient Info",
-										patientBloodType: patient.bloodType,
-										insuranceName: patient.insuranceName,
-										medicalHistory: patient.medicalHistory,
-
-										staffName: nurse.name,
-										staffDob: nurse.dob,
-										staffAge: nurse.age,
-										staffAddress: nurse.address,
-										staffProfilePictureURL: nurse.profilePictureURL,
-										staffModalType: "Staff Info",
-										staffBloodType: nurse.bloodType,
-										joinedDate: nurse.joinedDate,
-										department: nurse.department,
-										jobTitle: nurse.jobTitle,
-
-									}
+									data[callType] = tempResolutionTimes
 								})
+								return data;
+							};
 
-							})
+							const mockData = generateMockData();
+
+							// Generate labels for the chart
+							const labels = dates.map(date => date.toLocaleDateString("fr-Fr", { month: 'short', day: 'numeric', year: 'numeric' }));
+
+							// Prepare data for the chart
+							const chartData: ChartData<"line"> = {
+								labels: labels,
+								datasets: callTypes.map((type, index) => ({
+									label: type,
+									data: mockData[type],
+									borderColor: faker.color.human(),
+									backgroundColor: faker.color.human(),
+									pointRadius: 5
+
+								})),
+
+							};
+
+							const LineChartInfo = LineChart_init();
+
+							LineChartInfo.options.plugins!.title!.text = "Nurse Call Type Trends (Number Of Calls By Type Within The Last 30 Days)"
+							LineChartInfo.options.scales!.y = {
+								...LineChartInfo.options.scales!.y,
+
+								min: 0,
+								max: 70 // Add 10% padding
+
+							}
+							LineChartInfo.data = chartData
 
 
-
-							const DataGridInfo = DataGridComponent_init();
-
-							DataGridInfo.columns = columns;
-							DataGridInfo.rows = rows;
-
-							return DataGridInfo;
+							return LineChartInfo;
 						})(),
 					},
 				],
 			},
-*/
+		],
+	},
+];
+
+

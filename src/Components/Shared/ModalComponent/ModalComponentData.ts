@@ -2,7 +2,7 @@
 
 "use client"
 
-import { bloodTypes, medicalConditions, medicalConditionResolutionStatus, staffingDepartments, staffJobTitle, generateStaff, generateNurseCalls } from '@/Components/PageComponents/Data/SharedConsts';
+import { bloodTypes, medicalConditions, medicalConditionResolutionStatus, staffingDepartments, staffJobTitle, generateStaff, generateNurseCalls } from '@/Components/PageComponents/Shared/Data/SharedConsts';
 import { faker } from '@faker-js/faker';
 import { ModalProps } from "@mantine/core";
 import { HeatMapValue } from '@uiw/react-heat-map';
@@ -20,7 +20,7 @@ export type staffCallsType = {
         callType: string,
         room: number,
         callTime: string,
-        callResolutionTime: string,
+        callResolutionTime: number,
 
     }[]
 }
@@ -150,8 +150,11 @@ export const StaffCallsHeatMapCalendar_init = (inputs?: Partial<StaffCallsHeatMa
     const dateString = faker.date.past({ years: 1 }).toISOString().split("T")[0]
     const defaults: StaffCallsHeatMapCalendar = {
         modalTitle: "Heat Map Calls Info",
+
+        //@uiw/react-heat-map Properties
         date: dateString,
         count: count,
+
         staffCalls: staffList.map((staff, staffCallIndex) => {
 
             let nurseCalls;
@@ -174,6 +177,7 @@ export const StaffCallsHeatMapCalendar_init = (inputs?: Partial<StaffCallsHeatMa
                 calls: Array.from({ length: nurseCalls }, () => {
                     const generatingNurseCall = generateNurseCalls({ date: new Date(currentYear, 0, Math.floor(Math.random() * currentDayOfYear)) });
                     return {
+
                         date: dateString,
                         callType: generatingNurseCall.callType,
                         room: generatingNurseCall.room,

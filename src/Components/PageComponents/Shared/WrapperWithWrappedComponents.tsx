@@ -1,6 +1,6 @@
 import "server-only";
 
-import { PageComponentsType } from "../Data/PagesComponentsData";
+import { PageComponentsType } from "./Data/PagesComponentsData";
 import { Flex, Space, Stack } from "@mantine/core";
 import { GettingWrappersForDashboardPagesComponents } from "./GettingWrappersForDashboardPagesComponents";
 import { GettingWrappedComponentForPage } from "./GettingWrappedComponentForPage";
