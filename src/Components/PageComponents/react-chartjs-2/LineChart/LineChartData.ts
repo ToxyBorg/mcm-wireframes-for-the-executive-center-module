@@ -1,3 +1,5 @@
+// LineChartData.ts
+
 import "server-only"
 
 import { faker } from "@faker-js/faker";
@@ -9,9 +11,15 @@ export interface LineChartProps {
 }
 export const LineChart_init = (inputs?: Partial<LineChartProps>): LineChartProps => {
     const labels = ["January", "February", "March", "April", "May", "June", "July"];
-    const defaults = {
+    const defaults: LineChartProps = {
         options: {
             responsive: true,
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+            },
             plugins: {
                 legend: {
                     position: 'top' as const,

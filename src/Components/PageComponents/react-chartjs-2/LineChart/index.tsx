@@ -1,3 +1,5 @@
+// LineChart index.tsx
+
 "use client";
 
 import {
@@ -28,6 +30,7 @@ export const LineChart = (props: LineChartProps) => {
 		<Line
 			options={props.options}
 			data={props.data}
+			redraw
 		/>
 	);
 };

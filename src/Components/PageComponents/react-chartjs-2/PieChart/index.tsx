@@ -11,6 +11,11 @@ export const PieChart = (props: PieChartProps) => {
 		<Pie
 			options={props.options}
 			data={props.data}
+			redraw
+			style={{
+				maxWidth: 800,
+				maxHeight: 800,
+			}}
 		/>
 	);
 };

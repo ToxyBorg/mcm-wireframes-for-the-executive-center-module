@@ -1,16 +1,10 @@
 import "server-only";
 
 import {
-	Accordion,
-	AccordionControl,
-	AccordionItem,
-	AccordionPanel,
 	AppShellNavbar,
 	AppShellSection,
 	Button,
-	NavLink,
 	ScrollArea,
-	Stack,
 	Text,
 } from "@mantine/core";
 import Link from "next/link";
@@ -21,18 +15,20 @@ interface NavBarRootComponentProps {}
 export const NavBarRootComponent = (props: NavBarRootComponentProps) => {
 	return (
 		<AppShellNavbar>
-			<AppShellSection
-				p={"xs"}
-				component={Link}
-				href='/'
-				td={"none"}
-			>
-				<Text
-					size='xl'
-					fw={750}
+			<AppShellSection p={"md"}>
+				<Button
+					p={"xs"}
+					component={Link}
+					href='/Home'
+					td={"none"}
 				>
-					Home
-				</Text>
+					<Text
+						size='xl'
+						fw={750}
+					>
+						Home
+					</Text>
+				</Button>
 			</AppShellSection>
 
 			<AppShellSection

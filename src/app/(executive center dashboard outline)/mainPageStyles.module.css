@@ -1,0 +1,40 @@
+.executive-center-dashboard-outline {
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    margin: 20px;
+    box-shadow: 0 0 10px #ccc;
+}
+
+.h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+
+}
+
+.section {
+    padding: 20px;
+    border: 1px solid #ccc;
+
+}
+
+.subsection {
+    padding-bottom: 20px;
+}
+
+.ul {
+    margin-left: 20px;
+}
+
+.li {
+    margin-bottom: 5px;
+}

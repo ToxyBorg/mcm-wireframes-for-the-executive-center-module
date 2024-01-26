@@ -10,22 +10,25 @@ export const PieChart_init = (inputs?: Partial<PieChartProps>): PieChartProps =>
     const labels = ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'];
     const defaults = {
         options: {
-            responsive: true,
             plugins: {
                 legend: {
                     position: 'top' as const,
+
                 },
                 title: {
                     display: true,
+                    position: 'top' as const,
                     text: 'Chart.js Pie Chart',
                 },
+
             },
+
         },
         data: {
             labels,
             datasets: [
                 {
-                    label: '# of Votes',
+                    label: 'default label',
                     data: [12, 19, 3, 5, 2, 3],
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.2)',
