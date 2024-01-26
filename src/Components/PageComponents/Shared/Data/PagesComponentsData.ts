@@ -55,6 +55,7 @@ import {
 	generatePatients,
 	callTypes,
 	generateNurseCallsPropsReturn,
+	staffingDepartments,
 } from "./SharedConsts";
 import { StaffCallsHeatMapCalendar, staffCallsType } from "@/Components/Shared/ModalComponent/ModalComponentData";
 import { UiwHeatMapCalendarProps, UiwHeatMapCalendar_init } from "../../uiw/react-heat-map/UiwHeatMapCalendarData";
@@ -1468,10 +1469,9 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 			},
 			{
 				WrapperForComponents: {
-					WrapperName: "Container",
+					WrapperName: "Tabs",
 					WrapperProps: {
-						fluid: true,
-						w: "100%",
+
 					},
 				},
 				WrappedComponents: [
@@ -1497,12 +1497,12 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 							const generateMockData = () => {
 								const data: { [key: string]: number[] } = {};
 								callTypes.map((callType) => {
-									const tempResolutionTimes: number[] = []
+									const tempNumberOfCalls: number[] = []
 									dates.map((date) => {
-										tempResolutionTimes.push(faker.number.int({ min: 1, max: 60 }))
+										tempNumberOfCalls.push(faker.number.int({ min: 1, max: 60 }))
 									})
 
-									data[callType] = tempResolutionTimes
+									data[callType] = tempNumberOfCalls
 								})
 								return data;
 							};
@@ -1529,6 +1529,73 @@ export const PagesComponentData: PageComponentDataInterface[] = [
 							const LineChartInfo = LineChart_init();
 
 							LineChartInfo.options.plugins!.title!.text = "Nurse Call Type Trends (Number Of Calls By Type Within The Last 30 Days)"
+							LineChartInfo.options.scales!.y = {
+								...LineChartInfo.options.scales!.y,
+
+								min: 0,
+								max: 70 // Add 10% padding
+
+							}
+							LineChartInfo.data = chartData
+
+
+							return LineChartInfo;
+						})(),
+					},
+					{
+						ComponentTitle: "Nurse Call Department Trends",
+						ComponentName: "Line Chart",
+						Config: (() => {
+
+							// Generate an array of the last 30 days
+							const generateDateArray = () => {
+								const dates = [];
+								for (let i = 29; i >= 0; i--) {
+									const date = new Date();
+									date.setDate(date.getDate() - i);
+									dates.push(date);
+								}
+								return dates;
+							};
+
+							const dates = generateDateArray();
+
+							// Generate mock data
+							const generateMockData = () => {
+								const data: { [key: string]: number[] } = {};
+								staffingDepartments.map((department) => {
+									const tempNumberOfCalls: number[] = []
+									dates.map((date) => {
+										tempNumberOfCalls.push(faker.number.int({ min: 1, max: 60 }))
+									})
+
+									data[department] = tempNumberOfCalls
+								})
+								return data;
+							};
+
+							const mockData = generateMockData();
+
+							// Generate labels for the chart
+							const labels = dates.map(date => date.toLocaleDateString("fr-Fr", { month: 'short', day: 'numeric', year: 'numeric' }));
+
+							// Prepare data for the chart
+							const chartData: ChartData<"line"> = {
+								labels: labels,
+								datasets: callTypes.map((type, index) => ({
+									label: type,
+									data: mockData[type],
+									borderColor: faker.color.human(),
+									backgroundColor: faker.color.human(),
+									pointRadius: 5
+
+								})),
+
+							};
+
+							const LineChartInfo = LineChart_init();
+
+							LineChartInfo.options.plugins!.title!.text = "Nurse Call Department Trends (Number Of Calls By Department Within The Last 30 Days)"
 							LineChartInfo.options.scales!.y = {
 								...LineChartInfo.options.scales!.y,
 
